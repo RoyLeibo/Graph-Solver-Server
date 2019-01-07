@@ -8,9 +8,11 @@
 #include "Server.h"
 
 class MyParallelServer : public server_side::Server {
-    virtual void open();
-    virtual void stop();
-    virtual void start();
+
+    public:
+        virtual void open();
+        virtual void stop();
+        virtual void start();
 };
 
 
