@@ -8,6 +8,13 @@
 #include "ChlientHandler.h"
 
 class MyTestClient : public ChlientHandler {
+  
+  Solver solve ;
+  OpenSocket socket_opener ;
+  
+  public:
+  MyTestClient() ;
+  void handle_client(int sock_fd) ;
 
 };
 
