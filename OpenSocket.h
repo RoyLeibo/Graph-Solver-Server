@@ -7,6 +7,8 @@
 
 
 class OpenSocket {
+  
+  int open_socket() ;
 
 };
 

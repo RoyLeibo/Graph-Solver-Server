@@ -5,9 +5,10 @@
 #ifndef FINAL_PROJECT_SECOND_CHLIENTHANDLER_H
 #define FINAL_PROJECT_SECOND_CHLIENTHANDLER_H
 
-
 class ChlientHandler {
-
+  
+  void handle_client(int sock_fd) ;
+  
 };
 
 
