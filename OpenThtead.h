@@ -9,12 +9,14 @@ void* run_solver(void* arg) ;
 
 class OpenThread {
 
-  void open_thread() ;
+  public:
+  void open_thread(int port, ChlientHandler c_h) ;
   
 };
 
 struct solver_struct {
     int port ;
+    ChlientHandler c_h ;
 
 };
 
