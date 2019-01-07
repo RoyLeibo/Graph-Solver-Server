@@ -14,7 +14,7 @@ class OpenThread {
 };
 
 struct solver_struct {
-    int new_sock_fd ;
+    int port ;
 
 };
 
