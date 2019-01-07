@@ -8,7 +8,7 @@
 #include <sys/socket.h>
 #include "OpenSocket.h"
 
-int open_socket() {
+int open_socket(int port) {
   int sock_fd, clilen, new_sock_fd;
   struct sockaddr_in serv_addr, cli_addr;
 
@@ -42,6 +42,6 @@ int open_socket() {
       perror("cannot accept your connection request");
       exit(1);
   }
-
+  
   return new_sock_fd ;
 }
