@@ -7,7 +7,7 @@
 
 class ChlientHandler {
   
-  int handle_client(int sock_fd) ;
+  string handle_client(int sock_fd) ;
   
 };
 
