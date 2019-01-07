@@ -3,3 +3,8 @@
 //
 
 #include "MySrialServer.h"
+
+void MySrialServer:: open(int port, ChlientHandler chlientHandler)
+{
+
+}

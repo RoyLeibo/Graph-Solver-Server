@@ -12,9 +12,9 @@ int open_socket() {
   int sock_fd, clilen, new_sock_fd;
   struct sockaddr_in serv_addr, cli_addr;
 
-  sockfd = socket(AF_INET, SOCK_STREAM, 0); // calling to socket function
+  sock_fd = socket(AF_INET, SOCK_STREAM, 0); // calling to socket function
 
-  if (sockfd < 0) { // if the function failed, print error
+  if (sock_fd < 0) { // if the function failed, print error
       perror("cannot open socket, please try again");
       exit(1);
   }
@@ -27,16 +27,16 @@ int open_socket() {
   serv_addr.sin_port = htons(this->port);
 
 
-  if (bind(sockfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) < 0) { // binding host address
+  if (bind(sock_fd, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) < 0) { // binding host address
       perror("cannot bind to server");
       exit(1);
   }
 
-  listen(sockfd,1); // wait for a connection request
+  listen(sock_fd,1); // wait for a connection request
   clilen = sizeof(cli_addr);
 
   // accept the connection request
-  new_sock_fd = accept(sockfd, (struct sockaddr *)&cli_addr, (socklen_t*)&clilen);
+  new_sock_fd = accept(sock_fd, (struct sockaddr *)&cli_addr, (socklen_t*)&clilen);
 
   if (new_sock_fd < 0) { // if connection failed, print error
       perror("cannot accept your connection request");

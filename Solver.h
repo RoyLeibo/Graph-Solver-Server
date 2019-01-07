@@ -5,7 +5,7 @@
 #ifndef FINAL_PROJECT_SECOND_SOLVER_H
 #define FINAL_PROJECT_SECOND_SOLVER_H
 
-template <typename problem, typename solution>
+template <class problem,class solution>
 class Solver {
     solution solve(problem);
 

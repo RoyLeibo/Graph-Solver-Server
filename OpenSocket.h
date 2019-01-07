@@ -7,8 +7,10 @@
 
 
 class OpenSocket {
-  
-  int open_socket() ;
+    private:
+        int port = 0;
+    public:
+        int open_socket() ;
 
 };
 

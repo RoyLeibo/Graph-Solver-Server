@@ -10,7 +10,7 @@
 class MyParallelServer : public server_side::Server {
 
     public:
-        virtual void open();
+        virtual void open(int port, ChlientHandler chlientHandler);
         virtual void stop();
         virtual void start();
 };
