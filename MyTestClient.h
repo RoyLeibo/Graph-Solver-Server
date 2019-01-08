@@ -4,14 +4,16 @@
 
 #include "ClientHandler.h"
 
+
 class MyTestClient : public ClientHandler {
-  
-  Solver solver ;
-  OpenSocket socket_opener ;
+
+  private:
+        Solver<class problem,class solution> solver ;
+        OpenSocket socket_opener ;
   
   public:
-  MyTestClient() ;
-  void handle_client(int sock_fd) ;
+        MyTestClient() ;
+        void handle_client(int sock_fd) ;
 
 };
 
