@@ -12,7 +12,7 @@ class MySrialServer : public server_side::Server {
     private:
         OpenThread *openThread;
     public:
-        MySrialServer
+        MySrialServer();
         virtual void open(int port, ChlientHandler chlientHandler);
         virtual void stop();
         virtual void start();
