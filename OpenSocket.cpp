@@ -8,7 +8,7 @@
 #include <sys/socket.h>
 #include "OpenSocket.h"
 
-int open_socket(int port) {
+int open_socket(int port, int* time_out_flag) {
   int sock_fd, clilen, new_sock_fd;
   struct sockaddr_in serv_addr, cli_addr;
 
@@ -24,7 +24,7 @@ int open_socket(int port) {
   // update socket's data
   serv_addr.sin_family = AF_INET;
   serv_addr.sin_addr.s_addr = INADDR_ANY;
-  serv_addr.sin_port = htons(this->port);
+  serv_addr.sin_port = htons(port);
 
 
   if (bind(sock_fd, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) < 0) { // binding host address

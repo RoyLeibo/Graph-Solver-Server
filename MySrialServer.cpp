@@ -1,5 +1,6 @@
 
 #include "MySrialServer.h"
+
 MySrialServer::MySrialServer()
 {
     this->openThread =   new  OpenThread();

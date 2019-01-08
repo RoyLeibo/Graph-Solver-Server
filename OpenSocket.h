@@ -4,10 +4,9 @@
 
 
 class OpenSocket {
-    private:
-        int port = 0;
+
     public:
-        int open_socket(int port) ;
+        int open_socket(int port, int* time_out_flag) ;
 
 };
 
