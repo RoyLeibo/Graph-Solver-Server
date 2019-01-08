@@ -1,6 +1,3 @@
-//
-// Created by einat on 1/6/19.
-//
 
 #include "MyTestClient.h"
 
@@ -9,7 +6,7 @@ MyTestClient::MyTestClient() {
   this->socket_opener = new OpenSocket() ; 
 }
 
-void MyTestClient::handle_client(int sock_fd) {
+void MyTestClient::handle_client(int sock_fd, bool* end_flag) {
   char buffer [256] ;
   bzero(buffer,256) ;
   while (true) {
@@ -20,9 +17,10 @@ void MyTestClient::handle_client(int sock_fd) {
     else {
       if (!is_buffer_is_end()) {
         string problem = buffer ;
-        return this->solve.solver(problem) ;
+        return this->solver.solve(problem) ;
       }
       else {
+        *end_flag = false ;
         break ;
       }  
     }

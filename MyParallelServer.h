@@ -1,8 +1,4 @@
-//
-// Created by einat on 1/6/19.
-//
-
-#ifndef FINAL_PROJECT_SECOND_MYPARALLELSERVER_H
+\#ifndef FINAL_PROJECT_SECOND_MYPARALLELSERVER_H
 #define FINAL_PROJECT_SECOND_MYPARALLELSERVER_H
 
 #include "Server.h"
@@ -10,7 +6,7 @@
 class MyParallelServer : public server_side::Server {
 
     public:
-        virtual void open(int port, ChlientHandler chlientHandler);
+        virtual void open(int port, ClientHandler ClientHandler);
         virtual void stop();
         virtual void start();
 };

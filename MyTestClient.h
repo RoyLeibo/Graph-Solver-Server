@@ -1,20 +1,17 @@
-//
-// Created by einat on 1/6/19.
-//
 
 #ifndef FINAL_PROJECT_SECOND_MYTESTCLIENT_H
 #define FINAL_PROJECT_SECOND_MYTESTCLIENT_H
 
-#include "ChlientHandler.h"
+#include "ClientHandler.h"
 
-class MyTestClient : public ChlientHandler {
+class MyTestClient : public ClientHandler {
   
-  Solver solve ;
+  Solver solver ;
   OpenSocket socket_opener ;
   
   public:
   MyTestClient() ;
-  void handle_client(int sock_fd) ;
+  void handle_client(int sock_fd, bool* end_flag) ;
 
 };
 
