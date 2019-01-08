@@ -3,12 +3,20 @@
 #include "MySrialServer.h"
 #include "MyTestClient.h"
 #include "ClientHandler.h"
-namespace boot {
+#include "StringReverse.h"
+#include <string>
+
+using namespace std ;
 
 
-    int main(int argc, char* argv[]) {
+    int main(int argc, char *argv[]) {
+        int c1 = stoi(argv[1]);
+
+        Solver<string, string> *solver = new StringReverse() ;
         server_side::Server *A = new MySrialServer;
-        ClientHandler *B = new MyTestClient;
-        A->open(((*argv[0]) -'0'), *B);
+        ClientHandler *B = new MyTestClient(solver);
+        A->open(c1, B);
+        while(true){}
+
+        return 0 ;
     }
-}

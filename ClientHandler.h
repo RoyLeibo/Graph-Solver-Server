@@ -18,7 +18,7 @@ using namespace std ;
 class ClientHandler {
 
 public:
-  void handle_client(int sock_fd) ;
+  virtual void handle_client(int sock_fd) = 0 ;
   
 };
 

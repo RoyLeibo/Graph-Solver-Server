@@ -8,7 +8,7 @@
 #include <sys/socket.h>
 #include "OpenSocket.h"
 
-int open_socket(int port, int* time_out_flag) {
+int OpenSocket::open_socket(int port, int* time_out_flag) {
   int sock_fd, clilen, new_sock_fd;
   struct sockaddr_in serv_addr, cli_addr;
 
@@ -32,7 +32,7 @@ int open_socket(int port, int* time_out_flag) {
       exit(1);
   }
 
-  listen(sock_fd,1); // wait for a connection request
+  listen(sock_fd,5); // wait for a connection request
   clilen = sizeof(cli_addr);
 
   // accept the connection request

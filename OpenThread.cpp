@@ -6,11 +6,11 @@ void* run_solver(void* arg) {
   struct solver_struct arg_struct = *arg_struct_p;
   delete arg_struct_p;
   int sock_fd ;
-  int* time_out_flag = 0 ;
+  int time_out_flag = 0 ;
   while(true) {
-    sock_fd = OpenSocket().open_socket(arg_struct.port, time_out_flag) ;
-    if(*time_out_flag == 0) {
-        arg_struct.c_h.handle_client(sock_fd) ;
+    sock_fd = OpenSocket().open_socket(arg_struct.port, &time_out_flag) ;
+    if(time_out_flag == 0) {
+        arg_struct.c_h->handle_client(sock_fd) ;
         close(sock_fd) ;
     }
     else {
@@ -21,7 +21,7 @@ void* run_solver(void* arg) {
   pthread_exit(0) ;
 }
 
-void OpenThread::open_thread(int port, ClientHandler c_h) {
+void OpenThread::open_thread(int port, ClientHandler* c_h) {
 
     // after connection has established, initialize a thread for reading data from the simulator
     pthread_t tid ;

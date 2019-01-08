@@ -6,7 +6,7 @@
 class MyParallelServer : public server_side::Server {
 
     public:
-        virtual void open(int port, ClientHandler ClientHandler);
+        virtual void open(int port, ClientHandler* client_handler);
         virtual void stop();
         virtual void start();
 };

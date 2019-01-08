@@ -8,9 +8,11 @@
 class MySrialServer : public server_side::Server {
     private:
         OpenThread *openThread;
+        ClientHandler* client_handler ;
+
     public:
         MySrialServer();
-        virtual void open(int port, ClientHandler ClientHandler);
+        virtual void open(int port, ClientHandler* client_handler);
         virtual void stop();
         virtual void start();
 };

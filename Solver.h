@@ -5,7 +5,9 @@
 
 template <class problem,class solution>
 class Solver {
-    solution solve(problem);
+
+public:
+    virtual solution solve(problem) = 0;
 
 };
 

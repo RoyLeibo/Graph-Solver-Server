@@ -1,12 +1,13 @@
 
 #include "MyTestClient.h"
 
-MyTestClient::MyTestClient() {
-  this->solver = new Solver<class problem,class solution>() ;
+MyTestClient::MyTestClient(Solver<string, string>* string_solver) {
+  this->solver = string_solver ;
 }
 
 void MyTestClient::handle_client(int sock_fd) {
   char buffer [256] ;
+  char* answer ;
   string problem = "" ;
   string temp_buffer ;
   while (true) {
@@ -22,8 +23,10 @@ void MyTestClient::handle_client(int sock_fd) {
         perror("ERROR reading from socket");
     }
     else {
-      if (!is_buffer_is_end(buffer)) {
-        n = write(sockfd ,this->solver.solve(problem),18);
+      if (problem != "end") {
+        temp_buffer = this->solver->solve(problem);
+        answer = &buffer[0] ;
+        n = write(sock_fd, answer,18);
         problem = "" ;
         if (n < 0) {
           perror("ERROR writing to socket");
@@ -35,14 +38,6 @@ void MyTestClient::handle_client(int sock_fd) {
       }  
     }
   }
-}  
-
-
-bool MyTestClient::is_buffer_is_end(char buffer[]) {
-  if ((buffer[0] != 'e') || (buffer[1] != 'n') || (buffer[2] = 'd')) {
-    return false ;
-  }
-  return true ;
 }
 
 bool MyTestClient::is_end_line(char buffer[]) {

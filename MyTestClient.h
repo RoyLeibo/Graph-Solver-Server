@@ -2,18 +2,19 @@
 #ifndef FINAL_PROJECT_SECOND_MYTESTCLIENT_H
 #define FINAL_PROJECT_SECOND_MYTESTCLIENT_H
 
+#include <string>
 #include "ClientHandler.h"
 
+using namespace std ;
 
-class MyTestClient : public ClientHandler {
+class MyTestClient: public ClientHandler {
 
   private:
-        Solver<class problem,class solution>* solver ;
+        Solver<string, string>* solver ;
   
   public:
-        MyTestClient() ;
+        MyTestClient(Solver<string, string>* string_solver) ;
         void handle_client(int sock_fd) ;
-        bool is_buffer_is_end(char buffer[]) ;
         bool is_end_line(char buffer[]) ;
 
 };
