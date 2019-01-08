@@ -4,7 +4,7 @@
 template
 class ClientHandler {
   
-  void handle_client(int sock_fd, bool* end_flag) ;
+  void handle_client(int sock_fd) ;
   
 };
 

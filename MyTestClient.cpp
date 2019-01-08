@@ -6,7 +6,7 @@ MyTestClient::MyTestClient() {
   this->socket_opener = new OpenSocket() ; 
 }
 
-void MyTestClient::handle_client(int sock_fd, bool* end_flag) {
+void MyTestClient::handle_client(int sock_fd) {
   char buffer [256] ;
   bzero(buffer,256) ;
   while (true) {
@@ -20,7 +20,6 @@ void MyTestClient::handle_client(int sock_fd, bool* end_flag) {
         return this->solver.solve(problem) ;
       }
       else {
-        *end_flag = false ;
         break ;
       }  
     }

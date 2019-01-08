@@ -6,13 +6,11 @@ void* run_solver(void* arg) {
   struct solver_struct arg_struct = *arg_struct_p;
   delete arg_struct_p;
   int sock_fd ;
-  bool* end_flag = new bool ;
-  end_flag = true ;
   while(*end_flag) {
     sock_fd = OpenSocket().open_socket(arg_struct.port) ;
-    arg_struct.c_h.handle_client(sock_fd, end_flag) ;
+    arg_struct.c_h.handle_client(sock_fd) ;
+    close(sock_fd) ;
   }
-  delete end_flag ;
   pthread_exit(0) ;
 }
 
