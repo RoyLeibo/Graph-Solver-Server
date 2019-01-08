@@ -23,10 +23,10 @@ void MyTestClient::handle_client(int sock_fd) {
         perror("ERROR reading from socket");
     }
     else {
-      if (problem != "end") {
+      if (problem != "end\r\n") {
         temp_buffer = this->solver->solve(problem);
-        answer = &buffer[0] ;
-        n = write(sock_fd, answer,18);
+        answer = &temp_buffer[0] ;
+        n = write(sock_fd, answer, temp_buffer.length());
         problem = "" ;
         if (n < 0) {
           perror("ERROR writing to socket");
@@ -42,7 +42,7 @@ void MyTestClient::handle_client(int sock_fd) {
 
 bool MyTestClient::is_end_line(char buffer[]) {
   string temp_buffer = buffer ;
-  int is_end = temp_buffer.find('\n', 0) ;
+  int is_end = temp_buffer.find('\r\n', 0) ;
   if (is_end == -1) {
     return false ;
   }

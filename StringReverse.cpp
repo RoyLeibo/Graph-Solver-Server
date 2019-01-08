@@ -12,5 +12,7 @@ string StringReverse::solve(string problem)
         problem[i] = reverse;
         counter_from_end--;
     }
+    problem.erase(0,2) ;
+    problem += "\r\n" ;
     return problem;
 }

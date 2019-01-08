@@ -3,6 +3,7 @@
 #define FINAL_PROJECT_SECOND_MYTESTCLIENT_H
 
 #include <string>
+#include <iostream>
 #include "ClientHandler.h"
 
 using namespace std ;

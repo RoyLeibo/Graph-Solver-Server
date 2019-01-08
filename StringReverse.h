@@ -3,6 +3,7 @@
 #define FINAL_PROJECT_SECOND_StringReverse_H
 
 #include <string>
+#include <iostream>
 #include "Solver.h"
 
 using namespace std;

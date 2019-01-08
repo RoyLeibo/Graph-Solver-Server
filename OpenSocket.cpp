@@ -32,7 +32,7 @@ int OpenSocket::open_socket(int port, int* time_out_flag) {
       exit(1);
   }
 
-  listen(sock_fd,5); // wait for a connection request
+  listen(sock_fd, 5); // wait for a connection request
   clilen = sizeof(cli_addr);
 
   // accept the connection request
