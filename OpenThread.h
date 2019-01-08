@@ -2,12 +2,14 @@
 #ifndef FINAL_PROJECT_SECOND_OpenThread_H
 #define FINAL_PROJECT_SECOND_OpenThread_H
 
+#include "ClientHandler.h"
+
 void* run_solver(void* arg) ;
 
 class OpenThread {
 
   public:
-  void open_thread(int port, ClientHandler c_h) ;
+        void open_thread(int port, ClientHandler c_h) ;
   
 };
 
