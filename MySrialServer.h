@@ -1,19 +1,16 @@
-//
-// Created by einat on 1/6/19.
-//
 
 #ifndef FINAL_PROJECT_SECOND_MYSRIALSERVER_H
 #define FINAL_PROJECT_SECOND_MYSRIALSERVER_H
 
 #include "Server.h"
-#include "OpenThtead.h"
+#include "OpenThread.h"
 
 class MySrialServer : public server_side::Server {
     private:
         OpenThread *openThread;
     public:
-        MySrialServer();
-        virtual void open(int port, ChlientHandler chlientHandler);
+        MySrialServer
+        virtual void open(int port, ClientHandler ClientHandler);
         virtual void stop();
         virtual void start();
 };

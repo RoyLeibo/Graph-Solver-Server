@@ -1,6 +1,3 @@
-//
-// Created by einat on 1/6/19.
-//
 
 #include "MySrialServer.h"
 MySrialServer::MySrialServer()
@@ -8,7 +5,7 @@ MySrialServer::MySrialServer()
     this->openThread =   new  OpenThread();
 }
 
-void MySrialServer:: open(int port, ChlientHandler chlientHandler)
+void MySrialServer:: open(int port, ClientHandler ClientHandler)
 {
     this->openThread->open_thread(port);
 }
