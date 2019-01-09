@@ -2,6 +2,7 @@
 #ifndef FINAL_PROJECT_SECOND_OPENSOCKET_H
 #define FINAL_PROJECT_SECOND_OPENSOCKET_H
 
+#include <iostream>
 
 class OpenSocket {
 
