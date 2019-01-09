@@ -17,6 +17,7 @@ class MyTestClient: public ClientHandler {
         MyTestClient(Solver<string, string>* string_solver) ;
         void handle_client(int sock_fd) ;
         bool is_end_line(char buffer[]) ;
+        virtual ~MyTestClient();
 
 };
 

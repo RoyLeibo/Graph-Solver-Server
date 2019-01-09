@@ -48,3 +48,5 @@ bool MyTestClient::is_end_line(char buffer[]) {
   }
   return true ;
 }
+
+MyTestClient::~MyTestClient(){};

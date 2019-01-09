@@ -26,7 +26,7 @@ class FileCacheManager : public CacheManager<std::string,std::string> {
         void add_solution_vec(std::pair<std::string,std::string> solution);
         void add_solution_map(std::string problem,std::string solution);
         virtual void write_to_file(std::vector<std::pair<std::string,std::string>> vec);
-        ~FileCacheManager();
+        virtual ~FileCacheManager();
 };
 
 

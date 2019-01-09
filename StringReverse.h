@@ -15,7 +15,7 @@ class StringReverse: public Solver <string,string> {
     public:
         StringReverse();
         string solve(string problem);
-        ~StringReverse();
+        virtual ~StringReverse();
 
 };
 
