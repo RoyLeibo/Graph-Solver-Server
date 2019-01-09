@@ -8,7 +8,7 @@ class Solver {
 
 public:
     virtual solution solve(problem) = 0;
-    virtual ~Solver() = 0;
+    virtual ~Solver(){};
 };
 
 

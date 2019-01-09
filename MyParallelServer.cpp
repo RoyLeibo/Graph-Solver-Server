@@ -19,3 +19,5 @@ void MyParallelServer::stop() {
 void MyParallelServer::start() {
 
 }
+
+MyParallelServer::~MyParallelServer(){};
