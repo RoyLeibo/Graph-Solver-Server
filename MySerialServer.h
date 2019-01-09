@@ -5,13 +5,13 @@
 #include "Server.h"
 #include "OpenThread.h"
 
-class MySrialServer : public server_side::Server {
+class MySerialServer : public server_side::Server {
     private:
         OpenThread *openThread;
         ClientHandler* client_handler ;
 
     public:
-        MySrialServer();
+        MySerialServer();
         virtual void open(int port, ClientHandler* client_handler);
         virtual void stop();
         virtual void start();
