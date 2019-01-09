@@ -37,7 +37,6 @@ struct solver_struct {
 struct parallel_struct {
     ClientHandler* c_h ;
     vector<pthread_t>* threads_id ;
-    int port ;
     int sock_fd ;
 
 };

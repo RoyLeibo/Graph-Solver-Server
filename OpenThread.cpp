@@ -28,17 +28,18 @@ void* run_solver_parallel(void* arg) {
     vector<pthread_t> threads_id ;
     struct parallel_struct* p_s = new parallel_struct ;
     p_s->c_h = arg_struct.c_h ;
-    p_s->port = arg_struct.port ;
     p_s->threads_id = &threads_id ;
     int sock_fd ;
     int time_out_flag = 0 ;
     while(true) {
         sock_fd = OpenSocket().open_socket(arg_struct.port, &time_out_flag) ;
-        p_s->sock_fd = sock_fd ;
-        pthread_t tid ;
-        pthread_create(&tid, nullptr, run_solver_serial, p_s) ;
-        threads_id.push_back(tid) ;
-        if(time_out_flag == 1) {
+        if(time_out_flag == 0) {
+            p_s->sock_fd = sock_fd;
+            pthread_t tid;
+            threads_id.push_back(tid);
+            pthread_create(&tid, nullptr, run_in_parallel, p_s);
+        }
+        else {
             int threads_id_size = threads_id.size() ;
             for(int i = 0 ; i < threads_id_size ; i++) {
                 pthread_join(threads_id.at(i), NULL) ;
@@ -50,18 +51,19 @@ void* run_solver_parallel(void* arg) {
 }
 
 void* run_in_parallel(void* arg) {
-    struct solver_struct* arg_struct_p = (solver_struct*)arg ;
-    struct solver_struct arg_struct = *arg_struct_p;
-    delete arg_struct_p;
-    int time_out_flag = 0 ;
-    if(time_out_flag == 0) {
-        arg_struct.c_h->handle_client(sock_fd) ;
-        close(sock_fd) ;
+    struct parallel_struct* arg_struct_p = (parallel_struct*)arg ;
+    struct parallel_struct arg_struct = *arg_struct_p;
+    delete arg_struct_p ;
+    arg_struct.c_h->handle_client(arg_struct.sock_fd) ;
+    close(arg_struct.sock_fd) ;
+    int threads_id_size = arg_struct.threads_id->size() ;
+    for(int i = 0 ; i < threads_id_size ; i++) {
+        if(arg_struct.threads_id->at(i) == pthread_self()) {
+            arg_struct.threads_id->erase(arg_struct.threads_id->begin() + i) ;
+            break ;
+        }
     }
-    else {
-        close(sock_fd) ;
-        break ;
-    }
+    pthread_exit(0) ;
 }
 
 pthread_t OpenThread::open_thread(int port, ClientHandler* c_h, int server_client_handle) {
