@@ -17,7 +17,8 @@ int main(int argc, char *argv[]) {
     server_side::Server *A = new MySerialServer;
     ClientHandler *B = new MyTestClient(solver);
     A->open(c1, B);
-    while (true) {}
-
+    delete (solver);
+    delete (A);
+    delete (B);
     return 0;
 }

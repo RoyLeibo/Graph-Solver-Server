@@ -61,6 +61,7 @@ int OpenSocket::open_socket(int port, int* time_out_flag) {
       {
           std::cout<<"timeout!"<<std::endl;
           *time_out_flag = 1;
+          return 0;
       }
       else
       {
@@ -70,10 +71,10 @@ int OpenSocket::open_socket(int port, int* time_out_flag) {
   }
 
 
-  if (new_sock_fd < 0) { // if connection failed, print error
-      perror("cannot accept your connection request");
-      exit(1);
-  }
+ // if (new_sock_fd < 0) { // if connection failed, print error
+ //     perror("cannot accept your connection request");
+   //   exit(1);
+ // }
   
   return new_sock_fd ;
 }

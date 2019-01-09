@@ -51,3 +51,7 @@ bool MyClientHandler::is_end_line(char buffer[]) {
     }
     return true;
 }
+MyClientHandler::~MyClientHandler()
+{
+    delete(this->solver);
+}

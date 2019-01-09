@@ -30,3 +30,9 @@ string StringReverse::solve(string problem)
     return problem;
 }
 
+StringReverse::~StringReverse()
+{
+    cout<<"delete"<<endl;
+    delete(this->fileCacheManager);
+}
+

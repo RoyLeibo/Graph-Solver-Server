@@ -20,3 +20,8 @@ void MySerialServer::stop() {
 void MySerialServer::start() {
 
 }
+
+MySerialServer::~MySerialServer()
+{
+    delete(this->openThread);
+}
