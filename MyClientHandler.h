@@ -24,7 +24,7 @@ public:
     int size_of_matrix(string line) ;
 
     template <int rows, int columns>
-    void line_parser(int (&array)[rows][columns], string line, int size_of_matrix) ;
+    void matrix_build(int (&array)[rows][columns], string line, int size_of_matrix) ;
 
 };
 

@@ -14,7 +14,7 @@ void MyClientHandler::handle_client(int sock_fd) {
     string line = "";
     string temp_buffer;
     bool is_first_line = true;
-    int num_of_raws;
+    int num_of_col;
     while (true) {
         memset(buffer, 0, 256);
         int n = read(sock_fd, buffer, 256);
@@ -28,20 +28,22 @@ void MyClientHandler::handle_client(int sock_fd) {
         }
         line += temp_buffer;
         if (is_first_line) {
-            num_of_raws = size_of_matrix(line);
+            num_of_col = size_of_matrix(line);
             is_first_line = false;
         }
         if (line != "end\r\n") {
-            temp_buffer = this->solver->solve(line);
-            answer = &temp_buffer[0];
-            n = write(sock_fd, answer, temp_buffer.length());
-            line = "";
-            if (n < 0) {
-                perror("ERROR writing to socket");
-                exit(1);
-            }
+            line += "$" ;
         } else {
-            break;
+            auto[][] matrix = new int[num_of_col][num_of_col]() ;
+//            temp_buffer = this->solver->solve(line);
+//            answer = &temp_buffer[0];
+//            n = write(sock_fd, answer, temp_buffer.length());
+//            line = "";
+//            if (n < 0) {
+//                perror("ERROR writing to socket");
+//                exit(1);
+            break ;
+        }
         }
     }
 }
@@ -69,7 +71,7 @@ int MyClientHandler::size_of_matrix(string line) {
 }
 
 template <int rows, int columns>
-void MyClientHandler::line_parser(int (&array)[rows][columns], string line, int size_of_matrix) {
+void MyClientHandler::matrix_build(int (&array)[rows][columns], string line, int size_of_matrix) {
 
 }
 
