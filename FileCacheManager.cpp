@@ -61,13 +61,19 @@ void FileCacheManager::line_to_map(std::string line)
 
 }
 
-void FileCacheManager::write_to_file(std::vector<std::string> vec)
+void FileCacheManager::write_to_file(std::vector<std::pair<std::string,std::string>> vec)
 {
     std::string line;
     int len_vec = vec.size();
     this->solution_file.open("solution_file.csv",std::ios::app);
     for(int i = 0; i < len_vec; i++)
     {
+        line = "";
         line = this->vec.at(i).first + ',' + this->vec.at(i).second;
+        this->solution_file << line << std::endl;
     }
+}
+FileCacheManager::~FileCacheManager()
+{
+    write_to_file(this->vec);
 }
