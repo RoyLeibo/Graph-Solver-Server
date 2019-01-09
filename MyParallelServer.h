@@ -10,10 +10,11 @@ private:
     ClientHandler* client_handler ;
 
     public:
-        MyParallelServer(int port, ClientHandler* client_handler) ;
+        MyParallelServer() ;
         void open(int port, ClientHandler* client_handler);
         void stop() ;
         void start() ;
+        virtual ~MyParallelServer() ;
 };
 
 

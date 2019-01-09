@@ -1,7 +1,7 @@
 
 #include "MyParallelServer.h"
 
-MyParallelServer::MyParallelServer(int port, ClientHandler* client_handler)
+MyParallelServer::MyParallelServer()
 {
     this->openThread = new OpenThread();
 }
