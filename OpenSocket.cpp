@@ -11,8 +11,20 @@
 int OpenSocket::open_socket(int port, int* time_out_flag) {
   int sock_fd, clilen, new_sock_fd;
   struct sockaddr_in serv_addr, cli_addr;
+  int enable=1;
+
 
   sock_fd = socket(AF_INET, SOCK_STREAM, 0); // calling to socket function
+
+  if (setsockopt(sock_fd, SOL_SOCKET, SO_REUSEADDR, &enable, sizeof(int)) != 0){
+      perror("Cannot reuse address");
+      exit(1);
+  }
+
+  if (setsockopt(sock_fd, SOL_SOCKET, SO_REUSEPORT, &enable, sizeof(int)) != 0){
+      perror("Cannot reuse port");
+      exit(1);
+  }
 
   if (sock_fd < 0) { // if the function failed, print error
       perror("cannot open socket, please try again");
