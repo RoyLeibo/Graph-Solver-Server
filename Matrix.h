@@ -15,17 +15,19 @@ using namespace std ;
 
 class Matrix {
 
-    unordered_map<pair<int, int>, State*> vertex_map ;
-    pair<int, int> entry_vertex ;
-    pair<int, int> exit_vertex ;
+    unordered_map<string, State*> vertex_map ;
+    string entry_vertex ;
+    string exit_vertex ;
 
 public:
     Matrix(vector<string> matrix_vec) ;
+    string get_entry_vertex() ;
+    string get_exit_vertex() ;
+
+private:
     void build_matrix(vector<string> matrix_vec) ;
     vector<string> line_parse(string line) ;
     void update_map(vector<string> line_vec, int i) ;
-    pair<int, int> get_entry_vertex() ;
-    pair<int, int> get_exit_vertex() ;
 };
 
 
