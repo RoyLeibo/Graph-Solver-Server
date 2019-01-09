@@ -7,18 +7,25 @@
 
 #include <iostream>
 #include <cstddef>
-using namespace std ;
+#include <unordered_map>
+#include <vector>
+#include "State.h"
 
+using namespace std ;
 
 class Matrix {
 
-    int *matrix ;
-    int n ;
+    unordered_map<pair<int, int>, State*> vertex_map ;
+    pair<int, int> entry_vertex ;
+    pair<int, int> exit_vertex ;
 
 public:
-    Matrix(int n) ;
-    size_t find_index(int x, int y) ;
-
+    Matrix(vector<string> matrix_vec) ;
+    void build_matrix(vector<string> matrix_vec) ;
+    vector<string> line_parse(string line) ;
+    void update_map(vector<string> line_vec, int i) ;
+    pair<int, int> get_entry_vertex() ;
+    pair<int, int> get_exit_vertex() ;
 };
 
 
