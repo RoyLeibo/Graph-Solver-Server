@@ -9,12 +9,14 @@ MySerialServer::MySerialServer()
 void MySerialServer::open(int port, ClientHandler* client_handler)
 {
     this->client_handler = client_handler ;
-    this->openThread->open_thread(port, this->client_handler);
+    pthread_t thread_id =  this->openThread->open_thread(port, this->client_handler, 0);
+    pthread_join(thread_id, NULL) ;
 }
 
 void MySerialServer::stop() {
 
 }
+
 void MySerialServer::start() {
 
 }

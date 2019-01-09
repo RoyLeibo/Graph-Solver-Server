@@ -3,7 +3,6 @@
 #define FINAL_PROJECT_SECOND_MYSRIALSERVER_H
 
 #include "Server.h"
-#include "OpenThread.h"
 
 class MySerialServer : public server_side::Server {
     private:

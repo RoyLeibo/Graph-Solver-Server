@@ -5,10 +5,15 @@
 
 class MyParallelServer : public server_side::Server {
 
+private:
+    OpenThread *openThread;
+    ClientHandler* client_handler ;
+
     public:
-        virtual void open(int port, ClientHandler* client_handler);
-        virtual void stop();
-        virtual void start();
+        MyParallelServer(int port, ClientHandler* client_handler) ;
+        void open(int port, ClientHandler* client_handler);
+        void stop() ;
+        void start() ;
 };
 
 
