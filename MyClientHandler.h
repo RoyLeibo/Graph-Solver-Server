@@ -8,7 +8,9 @@
 
 #include <string>
 #include <iostream>
+#include <vector>
 #include "ClientHandler.h"
+#include "Matrix.h"
 
 using namespace std ;
 
@@ -21,10 +23,6 @@ public:
     MyClientHandler(Solver<string, string>* string_solver) ;
     void handle_client(int sock_fd) ;
     bool is_end_line(char buffer[]) ;
-    int size_of_matrix(string line) ;
-
-    template <int rows, int columns>
-    void matrix_build(int (&array)[rows][columns], string line, int size_of_matrix) ;
 
 };
 
