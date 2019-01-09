@@ -13,6 +13,7 @@ class StringReverse: public Solver <string,string> {
     private:
         FileCacheManager *fileCacheManager;
     public:
+        StringReverse();
         string solve(string problem);
 
 };

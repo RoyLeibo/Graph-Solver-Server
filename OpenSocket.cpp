@@ -7,6 +7,7 @@
 #include <string.h>
 #include <sys/socket.h>
 #include "OpenSocket.h"
+#include <iostream>
 
 int OpenSocket::open_socket(int port, int* time_out_flag) {
   int sock_fd, clilen, new_sock_fd;
@@ -47,8 +48,27 @@ int OpenSocket::open_socket(int port, int* time_out_flag) {
   listen(sock_fd, 5); // wait for a connection request
   clilen = sizeof(cli_addr);
 
+  timeval timeout;
+  timeout.tv_sec = 10;
+  timeout.tv_usec = 0;
+   setsockopt(sock_fd,SOL_SOCKET,SO_RCVTIMEO,(char *)&timeout, sizeof(timeout));
+
   // accept the connection request
   new_sock_fd = accept(sock_fd, (struct sockaddr *)&cli_addr, (socklen_t*)&clilen);
+  if(new_sock_fd < 0)
+  {
+      if(errno == EWOULDBLOCK)
+      {
+          std::cout<<"timeout!"<<std::endl;
+          *time_out_flag = 1;
+      }
+      else
+      {
+          perror("other error");
+          exit(3);
+      }
+  }
+
 
   if (new_sock_fd < 0) { // if connection failed, print error
       perror("cannot accept your connection request");

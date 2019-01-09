@@ -1,6 +1,11 @@
 
 #include "StringReverse.h"
 #include <string>
+StringReverse::StringReverse()
+{
+    this->fileCacheManager = new FileCacheManager();
+}
+
 string StringReverse::solve(string problem)
 {
     std:: string first_problem = problem;
@@ -19,7 +24,8 @@ string StringReverse::solve(string problem)
     }
     problem.erase(0,2) ;
     std::pair<std::string,std::string> solution = make_pair(first_problem,problem);
-    this->fileCacheManager->add_solution(solution);
+    this->fileCacheManager->add_solution_vec(solution);
+    this->fileCacheManager->add_solution_map(first_problem,problem);
     problem += "\r\n" ;
     return problem;
 }
