@@ -24,6 +24,7 @@ bool FileCacheManager:: find_solution(std::string problem)
     {
         update_map();
         this->flg = true;
+        return find_solution(problem);
     }
 
 }
@@ -32,7 +33,7 @@ std::string FileCacheManager:: get_solution(std::string problem)
     return this->hash_map[problem];
 }
 
-void FileCacheManager:: add_solution(std::pair<std::string,std::string> solution)
+void FileCacheManager:: add_solution_vec(std::pair<std::string,std::string> solution)
 {
     this->vec.push_back(solution);
 }
@@ -61,13 +62,25 @@ void FileCacheManager::line_to_map(std::string line)
 
 }
 
-void FileCacheManager::write_to_file(std::vector<std::string> vec)
+void FileCacheManager::write_to_file(std::vector<std::pair<std::string,std::string>> vec)
 {
     std::string line;
     int len_vec = vec.size();
     this->solution_file.open("solution_file.csv",std::ios::app);
     for(int i = 0; i < len_vec; i++)
     {
+        line = "";
         line = this->vec.at(i).first + ',' + this->vec.at(i).second;
+        this->solution_file << line << std::endl;
     }
+}
+
+void FileCacheManager::add_solution_map(std::string problem,std::string solution)
+{
+     this->hash_map.insert(std::pair<std::string,std::string>(problem,solution));
+}
+
+FileCacheManager::~FileCacheManager()
+{
+    write_to_file(this->vec);
 }

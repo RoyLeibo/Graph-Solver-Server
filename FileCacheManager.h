@@ -7,6 +7,7 @@
 #include <unordered_map>
 #include <vector>
 #include <fstream>
+#include <iostream>
 
 
 class FileCacheManager : public CacheManager<std::string,std::string> {
@@ -22,8 +23,10 @@ class FileCacheManager : public CacheManager<std::string,std::string> {
         FileCacheManager();
         virtual bool find_solution(std::string problem);
         virtual std::string get_solution(std::string problem);
-        void add_solution(std::pair<std::string,std::string> solution);
-        virtual void write_to_file(std::vector<std::string> vec);
+        void add_solution_vec(std::pair<std::string,std::string> solution);
+        void add_solution_map(std::string problem,std::string solution);
+        virtual void write_to_file(std::vector<std::pair<std::string,std::string>> vec);
+        ~FileCacheManager();
 };
 
 
