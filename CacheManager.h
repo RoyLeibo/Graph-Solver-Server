@@ -5,11 +5,11 @@
 #include <vector>
 
 template <class problem,class solution>
-class CachMenager {
+class CacheManager {
     public:
         virtual  bool find_solution(problem) = 0;
         virtual solution get_solution(problem) = 0;
-        //virtual void write_to_map(std::vector<solution> vec) = 0;
+        virtual void write_to_file(std::vector<solution> vec) = 0;
 };
 
 
