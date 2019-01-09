@@ -4,7 +4,7 @@
 
 #include "State.h"
 
-State::State(pair<int, int> vertex_index, int cost) {
+State::State(string vertex_index, int cost) {
     this->father = NULL ;
     this->vertex_index = vertex_index ;
     this->cost = cost ;
@@ -14,7 +14,7 @@ State* State::get_father() {
     return this->father ;
 }
 
-pair<int, int> State::get_vertex() {
+string State::get_vertex() {
     return this->vertex_index ;
 }
 
@@ -26,7 +26,7 @@ void State::set_father(State* father) {
     this->father = father ;
 }
 
-void State::set_vertex(pair<int, int> vertex) {
+void State::set_vertex(string vertex) {
     this->vertex_index = vertex ;
 }
 

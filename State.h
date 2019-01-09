@@ -14,16 +14,16 @@ using namespace std ;
 class State {
 
     State* father ;
-    pair<int, int> vertex_index ;
+    string vertex_index ;
     int cost ;
 
 public:
-    State(pair<int, int> vertex_index, int cost) ;
+    State(string vertex_index, int cost) ;
     State* get_father() ;
-    pair<int, int> get_vertex() ;
+    string get_vertex() ;
     int get_cost() ;
     void set_father (State* father) ;
-    void set_vertex(pair<int, int> vertex) ;
+    void set_vertex(string vertex) ;
     void set_cost(int cost) ;
 
 };
