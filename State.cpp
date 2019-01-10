@@ -33,3 +33,14 @@ void State::set_vertex(string vertex) {
 void State::set_cost(double cost) {
     this->cost = cost ;
 }
+
+int State::get_i() {
+    string index = this->get_vertex_index() ;
+    return stoi(index.substr(0, index.find(',', 0))) ;
+}
+
+int State::get_j() {
+    string index_vertex = this->get_vertex_index() ;
+    int index_of_comma = index_vertex.find(',', 0) ;
+    return stoi(index_vertex.substr(index_of_comma+1, index_vertex.length()-index_of_comma-1)) ;
+}

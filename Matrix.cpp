@@ -6,6 +6,7 @@
 
 Matrix::Matrix(vector<string> matrix_vec) {
     build_matrix(matrix_vec);
+    this->visited_map = create_visited_map() ;
 }
 
 void Matrix::build_matrix(vector<string> matrix_vec) {
@@ -59,36 +60,46 @@ State *Matrix::getGoalState() {
     return this->exit_vertex;
 }
 
-int Matrix::get_i(State s) {
-    string index = s.get_vertex_index() ;
-    return stoi(index.substr(0, index.find(',', 0))) ;
-}
-
-int Matrix::get_j(State s) {
-    string index_vertex = s.get_vertex_index() ;
-    int index_of_comma = index_vertex.find(',', 0) ;
-    return stoi(index_vertex.substr(index_of_comma+1, index_vertex.length()-index_of_comma-1)) ;
-}
-
 string Matrix::create_index(int i, int j) {
     return to_string(i)+","+to_string(j) ;
 }
 
-list<State*> Matrix::getAllPossibleStates(State s) {
-    list<State*> possibleStates;
-    int this_i = get_i(s) ;
-    int this_j = get_j(s) ;
+vector<State*> Matrix::getAllPossibleStates(State* s) {
+    vector<State*> possibleStates;
+    int this_i = s->get_i() ;
+    int this_j = s->get_j() ;
     if(this_i+1 < n) {
-        possibleStates.push_front(vertex_map[create_index(this_i+1, this_j)]) ;
+        possibleStates.push_back(vertex_map[create_index(this_i+1, this_j)]) ;
     }
     if(this_i-1 < 0) {
-        possibleStates.push_front(vertex_map[create_index(this_i-1, this_j)]) ;
+        possibleStates.push_back(vertex_map[create_index(this_i-1, this_j)]) ;
     }
     if(this_j+1 < n) {
-        possibleStates.push_front(vertex_map[create_index(this_i, this_j+1)]) ;
+        possibleStates.push_back(vertex_map[create_index(this_i, this_j+1)]) ;
     }
     if(this_j-1 < 0) {
-        possibleStates.push_front(vertex_map[create_index(this_i, this_j-1)]) ;
+        possibleStates.push_back(vertex_map[create_index(this_i, this_j-1)]) ;
     }
     return possibleStates;
+}
+
+map<string, vector<State*>>Matrix::build_adjacent_map() {
+    map<string, vector<State*>> adjacent_map ;
+    unordered_map<string, State*>::iterator it ;
+    for(it = vertex_map.begin() ; it != vertex_map.end() ; it++) {
+        adjacent_map[it->first] = getAllPossibleStates(it->second) ;
+    }
+    return adjacent_map ;
+}
+
+map<string, bool> Matrix::create_visited_map() {
+    unordered_map<string, State*>::iterator it ;
+    map<string, bool> visited_map ;
+    for(it = vertex_map.begin() ; it != vertex_map.end() ; it++) {
+        visited_map.insert(pair<string, bool>(it->first, false)) ;
+    }
+}
+
+void Matrix::set_visited_map(string index) {
+    this->visited_map[index] = true ;
 }

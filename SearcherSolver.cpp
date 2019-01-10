@@ -3,3 +3,9 @@
 //
 
 #include "SearcherSolver.h"
+
+//string SearcherSolver::solve(Searchable problem) {
+//    return "" ;
+//}
+//
+//SearcherSolver::~SearcherSolver(){}

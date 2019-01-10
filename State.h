@@ -24,6 +24,8 @@ public:
     void set_father (State* father) ;
     void set_vertex(string vertex) ;
     void set_cost(double cost) ;
+    int get_i() ;
+    int get_j();
 
 };
 

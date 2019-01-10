@@ -13,12 +13,12 @@
 using namespace std ;
 
 class BFS: public Searcher{
-    map<string, bool> visited ;
 
 public:
-    void init() ;
-    virtual string search(Searchable searchable) ;
+    virtual string search(Searchable* searchable) ;
     virtual int getNumberOfNodesEvaluated() ;
+    virtual string restore_solution(Searchable* searchable) ;
+    string check_direction(State* current) ;
 
 };
 

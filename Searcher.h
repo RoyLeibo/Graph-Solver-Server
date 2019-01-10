@@ -6,14 +6,17 @@
 #define FINAL_PROJECT_SECOND_SEARCHER_H
 
 #include <string>
+#include <queue>
+#include <unordered_map>
 #include "Searchable.h"
 
 using namespace std ;
 
 class Searcher {
 public:
-    virtual string search(Searchable searchable) = 0;
+    virtual string search(Searchable* searchable) = 0;
     virtual int getNumberOfNodesEvaluated() = 0;
+    virtual string restore_solution(Searchable* searchable) = 0 ;
 };
 
 
