@@ -1,6 +1,7 @@
 
 #include "StringReverse.h"
 #include <string>
+
 StringReverse::StringReverse()
 {
     this->fileCacheManager = new FileCacheManager();

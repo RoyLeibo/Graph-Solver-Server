@@ -49,7 +49,7 @@ int OpenSocket::open_socket(int port, int* time_out_flag) {
   clilen = sizeof(cli_addr);
 
   timeval timeout;
-  timeout.tv_sec = 10;
+  timeout.tv_sec = 10000000000000;
   timeout.tv_usec = 0;
    setsockopt(sock_fd,SOL_SOCKET,SO_RCVTIMEO,(char *)&timeout, sizeof(timeout));
 
@@ -75,6 +75,6 @@ int OpenSocket::open_socket(int port, int* time_out_flag) {
  //     perror("cannot accept your connection request");
    //   exit(1);
  // }
-  
+  std::cout << "connected" << std::endl ;
   return new_sock_fd ;
 }

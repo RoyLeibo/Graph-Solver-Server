@@ -26,14 +26,14 @@ void* run_solver_parallel(void* arg) {
     struct solver_struct arg_struct = *arg_struct_p;
     delete arg_struct_p;
     vector<pthread_t> threads_id ;
-    struct parallel_struct* p_s = new parallel_struct ;
-    p_s->c_h = arg_struct.c_h ;
-    p_s->threads_id = &threads_id ;
     int sock_fd ;
     int time_out_flag = 0 ;
     while(true) {
         sock_fd = OpenSocket().open_socket(arg_struct.port, &time_out_flag) ;
         if(time_out_flag == 0) {
+            parallel_struct* p_s = new parallel_struct ;
+            p_s->c_h = arg_struct.c_h ;
+            p_s->threads_id = &threads_id ;
             p_s->sock_fd = sock_fd;
             pthread_t tid;
             threads_id.push_back(tid);
