@@ -20,6 +20,10 @@ string BFS::search(Searchable* searchable) {
         vector<State*> temp_adjacent = adjacent_map[current_vertex->get_vertex_index()] ;
         for (int i = 0 ; i < temp_adjacent.size() ; i++) {
             current_adjacent = temp_adjacent[i] ;
+            if(current_adjacent->get_cost() < 0)
+            {
+               visited_map[current_adjacent->get_vertex_index()] = true;
+            }
             if(visited_map[current_adjacent->get_vertex_index()] == false) {
                 current_adjacent->set_father(current_vertex) ;
                 if(current_adjacent != searchable->getGoalState()) {
