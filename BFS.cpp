@@ -6,10 +6,12 @@
 
 string BFS::search(Searchable* searchable) {
     queue<State*> q ;
-    map<string, vector<State*>> adjacent_map = searchable->build_adjacent_map() ;
-    map<string, bool> visited_map = searchable->create_visited_map() ;
+    unordered_map<string, State*>* vertex_map = searchable->get_vertex_map() ;
+    map<string, vector<State*>> adjacent_map = SearchableUtility::build_adjacent_map(vertex_map , searchable->get_n()) ;
+//    searchable->build_adjacent_map(searchable->get_vertex_map(), searchable->get_n()) ;
+    map<string, bool> visited_map = SearchableUtility::create_visited_map(vertex_map) ;
     q.push(searchable->getInitialState()) ;
-    searchable->set_visited_map(searchable->getInitialState()->get_vertex_index()) ;
+    SearchableUtility::set_visited_map(searchable->getInitialState()->get_vertex_index(), &visited_map) ;
     State* vertex ;
     State* adjacent ;
     while(q.empty() == false) {

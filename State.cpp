@@ -44,3 +44,12 @@ int State::get_j() {
     int index_of_comma = index_vertex.find(',', 0) ;
     return stoi(index_vertex.substr(index_of_comma+1, index_vertex.length()-index_of_comma-1)) ;
 }
+
+int State::find_manhattan_distance(State* other) {
+    int current_i = this->get_i() ;
+    int current_j = this->get_j() ;
+    int other_i = other->get_i() ;
+    int other_j = other->get_j() ;
+    int distance = abs(current_i-other_i) + abs(current_j-other_j) ;
+    return distance ;
+}

@@ -20,19 +20,14 @@ class Matrix: public Searchable {
     unordered_map<string, State*> vertex_map ;
     State* entry_vertex ;
     State* exit_vertex ;
-    map<string, bool> visited_map ;
     int n ;
 
 public:
-    Matrix(vector<string> matrix_vec) ;
+    Matrix(vector<string> vertex_map) ;
     virtual State* getInitialState() ;
     virtual State* getGoalState() ;
-    string create_index(int i, int j) ;
-    map<string, vector<State*>>build_adjacent_map() ;
-    map<string, bool> create_visited_map() ;
-    virtual vector<State*> getAllPossibleStates(State* s) ;
-    void set_visited_map(string index) ;
-
+    virtual unordered_map<string, State*>* get_vertex_map() ;
+    virtual int get_n() ;
 
 private:
     void build_matrix(vector<string> matrix_vec) ;

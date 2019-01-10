@@ -12,6 +12,7 @@
 #include <string>
 #include "Solver.h"
 #include "OpenSocket.h"
+#include "SearchableUtility.h"
 
 using namespace std ;
 

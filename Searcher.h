@@ -9,10 +9,12 @@
 #include <queue>
 #include <unordered_map>
 #include "Searchable.h"
+#include "SearchableUtility.h"
 
 using namespace std ;
 
 class Searcher {
+
 public:
     virtual string search(Searchable* searchable) = 0;
     virtual int getNumberOfNodesEvaluated() = 0;

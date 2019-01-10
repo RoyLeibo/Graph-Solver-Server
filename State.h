@@ -7,6 +7,8 @@
 
 #include <string>
 #include <iostream>
+#include <math.h>
+#include <string>
 
 using namespace std ;
 
@@ -26,7 +28,7 @@ public:
     void set_cost(double cost) ;
     int get_i() ;
     int get_j();
-
+    int find_manhattan_distance(State* other) ;
 };
 
 
