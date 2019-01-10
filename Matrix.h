@@ -10,19 +10,25 @@
 #include <unordered_map>
 #include <vector>
 #include "State.h"
+#include "Searchable.h"
 
 using namespace std ;
 
-class Matrix {
+class Matrix: public Searchable {
 
     unordered_map<string, State*> vertex_map ;
-    string entry_vertex ;
-    string exit_vertex ;
+    State* entry_vertex ;
+    State* exit_vertex ;
+    int n ;
 
 public:
     Matrix(vector<string> matrix_vec) ;
-    string get_entry_vertex() ;
-    string get_exit_vertex() ;
+    virtual State* getInitialState() ;
+    virtual State* getGoalState() ;
+    int get_i(State s) ;
+    int get_j(State s) ;
+    string create_index(int i, int j) ;
+    virtual list<State*> getAllPossibleStates(State s) ;
 
 private:
     void build_matrix(vector<string> matrix_vec) ;

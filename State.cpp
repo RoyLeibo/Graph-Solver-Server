@@ -14,7 +14,7 @@ State* State::get_father() {
     return this->father ;
 }
 
-string State::get_vertex() {
+string State::get_vertex_index() {
     return this->vertex_index ;
 }
 

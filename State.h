@@ -20,7 +20,7 @@ class State {
 public:
     State(string vertex_index, int cost) ;
     State* get_father() ;
-    string get_vertex() ;
+    string get_vertex_index() ;
     int get_cost() ;
     void set_father (State* father) ;
     void set_vertex(string vertex) ;

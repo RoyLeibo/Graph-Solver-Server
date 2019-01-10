@@ -31,7 +31,7 @@ void MyClientHandler::handle_client(int sock_fd) {
             matrix_vec.push_back(line);
         } else {
 //          temp_buffer = this->solver->solve(Matrix(matrix_vec)) ;
-temp_buffer = "aaa" ;
+            temp_buffer = "aaa" ;
             answer = &temp_buffer[0];
             n = write(sock_fd, answer, temp_buffer.length());
             line = "" ;
