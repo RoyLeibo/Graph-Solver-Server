@@ -46,7 +46,7 @@ void Matrix::update_map(vector<string> line_vec, int i) {
     string vertex_index;
     for (int j = 0; j < vec_length; j++) {
         vertex_index = to_string(i) + "," + to_string(j);
-        temp_state = new State(vertex_index, stoi(line_vec.at(j)));
+        temp_state = new State(vertex_index, stod(line_vec.at(j)));
         vertex_map.insert(pair<string, State *>(vertex_index, temp_state));
     }
 }

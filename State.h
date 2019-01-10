@@ -10,21 +10,20 @@
 
 using namespace std ;
 
-
 class State {
 
     State* father ;
     string vertex_index ;
-    int cost ;
+    double cost ;
 
 public:
-    State(string vertex_index, int cost) ;
+    State(string vertex_index, double cost) ;
     State* get_father() ;
     string get_vertex_index() ;
-    int get_cost() ;
+    double get_cost() ;
     void set_father (State* father) ;
     void set_vertex(string vertex) ;
-    void set_cost(int cost) ;
+    void set_cost(double cost) ;
 
 };
 
