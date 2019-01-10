@@ -13,7 +13,11 @@ public:
     virtual string search(Searchable* searchable) = 0;
     virtual int getNumberOfNodesEvaluated() = 0;
     virtual string restore_solution(Searchable* searchable) = 0 ;
-    int heuristic_func(State* current, State* goal) ;
+    string check_direction(State* current) ;
+    int heuristic_func(State* current, State* next_vertex, State* goal, map<string, int>* cost_to_vertex_map) ;
+    map<string, int> build_path_cost_map(unordered_map<string, State*>* vertex_map) ;
+    bool find_in_vec(vector<State*>* vec, State* current) ;
+    int find_lowest_cost(vector<State*>* vec, map<string,int>* cost_to_vertex_map) ;
 };
 
 

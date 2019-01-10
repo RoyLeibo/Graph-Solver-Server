@@ -8,6 +8,7 @@
 #include <string>
 #include <queue>
 #include <unordered_map>
+#include <limits>
 #include "Searchable.h"
 #include "SearchableUtility.h"
 

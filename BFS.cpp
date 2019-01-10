@@ -12,19 +12,19 @@ string BFS::search(Searchable* searchable) {
     map<string, bool> visited_map = SearchableUtility::create_visited_map(vertex_map) ;
     q.push(searchable->getInitialState()) ;
     SearchableUtility::set_visited_map(searchable->getInitialState()->get_vertex_index(), &visited_map) ;
-    State* vertex ;
-    State* adjacent ;
+    State* current_vertex ;
+    State* current_adjacent ;
     while(q.empty() == false) {
-        vertex = q.front() ;
+        current_vertex = q.front() ;
         q.pop() ;
-        vector<State*> temp_adjacent = adjacent_map[vertex->get_vertex_index()] ;
+        vector<State*> temp_adjacent = adjacent_map[current_vertex->get_vertex_index()] ;
         for (int i = 0 ; i < temp_adjacent.size() ; i++) {
-            adjacent = temp_adjacent[i] ;
-            if(visited_map[adjacent->get_vertex_index()] == false) {
-                adjacent->set_father(vertex) ;
-                if(adjacent != searchable->getGoalState()) {
-                    q.push(adjacent);
-                    visited_map[adjacent->get_vertex_index()] = true;
+            current_adjacent = temp_adjacent[i] ;
+            if(visited_map[current_adjacent->get_vertex_index()] == false) {
+                current_adjacent->set_father(current_vertex) ;
+                if(current_adjacent != searchable->getGoalState()) {
+                    q.push(current_adjacent);
+                    visited_map[current_adjacent->get_vertex_index()] = true;
                 }
                 else {
                     return restore_solution(searchable) ;

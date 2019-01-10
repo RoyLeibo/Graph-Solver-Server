@@ -26,12 +26,12 @@ int main(int argc, char *argv[]) {
 
 vector<string> matrix_vec ;
 matrix_vec.push_back("1,2,3,3,2") ;
-    matrix_vec.push_back("1,2,3,3,2") ;
+    matrix_vec.push_back("-1,2,3,3,2") ;
     matrix_vec.push_back("1,2,3,3,2") ;
     matrix_vec.push_back("2,3,1,4,3") ;
     matrix_vec.push_back("3,2,1,5,4") ;
-    matrix_vec.push_back("1,3") ;
-    matrix_vec.push_back("3,2") ;
+    matrix_vec.push_back("0,0") ;
+    matrix_vec.push_back("4,4") ;
     Searchable* mat = new Matrix(matrix_vec) ;
     Searcher* bfs = new BFS() ;
     cout << bfs->search(mat) << endl ;
