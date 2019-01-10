@@ -71,13 +71,13 @@ vector<State*> Matrix::getAllPossibleStates(State* s) {
     if(this_i+1 < n) {
         possibleStates.push_back(vertex_map[create_index(this_i+1, this_j)]) ;
     }
-    if(this_i-1 < 0) {
+    if(this_i-1 >= 0) {
         possibleStates.push_back(vertex_map[create_index(this_i-1, this_j)]) ;
     }
     if(this_j+1 < n) {
         possibleStates.push_back(vertex_map[create_index(this_i, this_j+1)]) ;
     }
-    if(this_j-1 < 0) {
+    if(this_j-1 >= 0) {
         possibleStates.push_back(vertex_map[create_index(this_i, this_j-1)]) ;
     }
     return possibleStates;
@@ -98,6 +98,7 @@ map<string, bool> Matrix::create_visited_map() {
     for(it = vertex_map.begin() ; it != vertex_map.end() ; it++) {
         visited_map.insert(pair<string, bool>(it->first, false)) ;
     }
+    return visited_map ;
 }
 
 void Matrix::set_visited_map(string index) {
