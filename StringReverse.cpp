@@ -8,6 +8,7 @@ StringReverse::StringReverse()
 
 string StringReverse::solve(string problem)
 {
+    problem = problem.substr(0,problem.length()-2);
     std:: string first_problem = problem;
     if(this->fileCacheManager->find_solution(problem))
     {
@@ -22,7 +23,7 @@ string StringReverse::solve(string problem)
         problem[i] = reverse;
         counter_from_end--;
     }
-    problem.erase(0,2) ;
+    //problem.erase(0,2) ;
     std::pair<std::string,std::string> solution = make_pair(first_problem,problem);
     this->fileCacheManager->add_solution_vec(solution);
     this->fileCacheManager->add_solution_map(first_problem,problem);
@@ -32,7 +33,6 @@ string StringReverse::solve(string problem)
 
 StringReverse::~StringReverse()
 {
-    cout<<"delete"<<endl;
     delete(this->fileCacheManager);
 }
 

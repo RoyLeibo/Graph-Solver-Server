@@ -1,4 +1,5 @@
 #include "FileCacheManager.h"
+#include <iterator>
 
 FileCacheManager::FileCacheManager()
 {
@@ -70,8 +71,10 @@ void FileCacheManager::write_to_file(std::vector<std::pair<std::string,std::stri
     for(int i = 0; i < len_vec; i++)
     {
         line = "";
-        line = this->vec.at(i).first + ',' + this->vec.at(i).second;
-        this->solution_file << line << std::endl;
+        std::string one = this->vec.at(i).first;
+        std::string sec = this->vec.at(i).second;
+        //line = this->vec.at(i).first + ',' + this->vec.at(i).second;
+        this->solution_file << one<<","<<sec<< "\n";
     }
 }
 
