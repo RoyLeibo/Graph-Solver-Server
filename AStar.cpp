@@ -6,8 +6,8 @@
 
 string AStar::search(Searchable *searchable) {
     unordered_map<string, State *> *vertex_map = searchable->get_vertex_map();
-    map<string, int> g_map = build_distance_map(vertex_map);
-    map<string, int> f_map = build_g_map(vertex_map);
+    map<string, int> g_map = build_g_map(vertex_map);
+    map<string, double> f_map = build_f_map(vertex_map);
     map<string, vector<State *>> adjacent_map = SearchableUtility::build_adjacent_map(vertex_map, searchable->get_n());
 
     State *current_vertex;
@@ -21,7 +21,7 @@ string AStar::search(Searchable *searchable) {
     open_vec.push_back(start_vertex);
 
     g_map[start_vertex->get_vertex_index()] = 0;
-    f_map[start_vertex->get_vertex_index()] = start_vertex->find_manhattan_distance(goal_vertex);
+    f_map[start_vertex->get_vertex_index()] = start_vertex->calc_heuristic(goal_vertex);
 
     vector<State *>::iterator low_cost_it;
     vector<State *>::iterator begin_it;
@@ -55,26 +55,16 @@ string AStar::search(Searchable *searchable) {
                     temp_adj->set_father(current_vertex);
                     open_vec.push_back(temp_adj);
                     g_map[adj_index] = adj_distance_value;
-                    f_map[adj_index] = adj_distance_value + temp_adj->find_manhattan_distance(goal_vertex);
+                    f_map[adj_index] = adj_distance_value + temp_adj->calc_heuristic(goal_vertex);
                 }
             } else {
                 continue;
             }
-
-
-//                if (!find_in_vec(&close_vec, temp_adj)) {
-//                    f_map[adj_index] = g_map[adj_index] + temp_adj->find_manhattan_distance(goal_vertex) ;
-//                    if (!find_in_vec(&open_vec, temp_adj)) {
-//                        open_vec.push_back(temp_adj) ;
-//                    }
-//                    else {
-//
-//                    }
         }
     }
 }
 
-map<string, int> AStar::build_distance_map(unordered_map<string, State *> *vertex_map) {
+map<string, int> AStar::build_g_map(unordered_map<string, State *> *vertex_map) {
     map<string, int> cost_distance_map;
     unordered_map<string, State *>::iterator it;
     for (it = vertex_map->begin(); it != vertex_map->end(); ++it) {
@@ -83,26 +73,14 @@ map<string, int> AStar::build_distance_map(unordered_map<string, State *> *verte
     return cost_distance_map;
 }
 
-map<string, int> AStar::build_g_map(unordered_map<string, State *> *vertex_map) {
+map<string, double> AStar::build_f_map(unordered_map<string, State *> *vertex_map) {
     int init_cost = numeric_limits<int>::max();
-    map<string, int> g_map;
+    map<string, double> g_map;
     unordered_map<string, State *>::iterator it;
     for (it = vertex_map->begin(); it != vertex_map->end(); ++it) {
         g_map.insert(pair<string, int>(it->first, init_cost));
     }
     return g_map;
-}
-
-void AStar::distance_calc(State *current, vector<State *> adj_vec, map<string, int> *cost_distance_map) {
-    string adj_index;
-    int next_vertex_cost;
-    State *temp_adj;
-    for (int i = 0; i < adj_vec.size(); i++) {
-        temp_adj = adj_vec[i];
-        adj_index = temp_adj->get_vertex_index();
-        next_vertex_cost = cost_distance_map->at(current->get_vertex_index()) + temp_adj->get_cost();
-        (*cost_distance_map)[adj_index] = next_vertex_cost;
-    }
 }
 
 string AStar::restore_solution(Searchable *searchable) {
@@ -154,7 +132,7 @@ int AStar::find_in_vec(vector<State *> *vec, State *current) {
     return -1;
 }
 
-vector<State *>::iterator AStar::find_lowest_cost(vector<State *> *vec, map<string, int> *cost_to_vertex_map) {
+vector<State *>::iterator AStar::find_lowest_cost(vector<State *> *vec, map<string, double> *cost_to_vertex_map) {
     int min_cost = numeric_limits<int>::max();
     vector<State *>::iterator it;
     vector<State *>::iterator min_cost_it;

@@ -28,7 +28,7 @@ public:
     void set_cost(double cost) ;
     int get_i() ;
     int get_j();
-    int find_manhattan_distance(State* goal) ;
+    double calc_heuristic(State* goal) ;
 };
 
 

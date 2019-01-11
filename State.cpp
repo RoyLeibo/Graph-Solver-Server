@@ -45,11 +45,10 @@ int State::get_j() {
     return stoi(index_vertex.substr(index_of_comma+1, index_vertex.length()-index_of_comma-1)) ;
 }
 
-int State::find_manhattan_distance(State* goal) {
+double State::calc_heuristic(State* goal) {
     int current_i = this->get_i() ;
     int current_j = this->get_j() ;
     int goal_i = goal->get_i() ;
     int goal_j = goal->get_j() ;
-    int distance = abs(current_i-goal_i) + abs(current_j-goal_j) ;
-    return distance ;
+    return sqrt(pow(current_i-goal_i, 2) + pow(current_j-goal_j, 2)) ;
 }
