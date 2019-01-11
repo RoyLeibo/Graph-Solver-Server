@@ -31,11 +31,13 @@ void* run_solver_parallel(void* arg) {
     while(true) {
         sock_fd = OpenSocket().open_socket(arg_struct.port, &time_out_flag) ;
         if(time_out_flag == 0) {
+            pthread_t tid;
             parallel_struct* p_s = new parallel_struct ;
-            p_s->c_h = arg_struct.c_h ;
+            ClientHandler* c_h_copy = arg_struct.c_h ;
+            p_s->c_h = c_h_copy ;
             p_s->threads_id = &threads_id ;
             p_s->sock_fd = sock_fd;
-            pthread_t tid;
+            p_s->this_id = tid ;
             threads_id.push_back(tid);
             pthread_create(&tid, nullptr, run_in_parallel, p_s);
         }
@@ -58,7 +60,7 @@ void* run_in_parallel(void* arg) {
     close(arg_struct.sock_fd) ;
     int threads_id_size = arg_struct.threads_id->size() ;
     for(int i = 0 ; i < threads_id_size ; i++) {
-        if(arg_struct.threads_id->at(i) == pthread_self()) {
+        if(arg_struct.threads_id->at(i) == arg_struct.this_id) {
             arg_struct.threads_id->erase(arg_struct.threads_id->begin() + i) ;
             break ;
         }

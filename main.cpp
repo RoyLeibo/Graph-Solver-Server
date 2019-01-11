@@ -9,6 +9,9 @@
 #include "Searcher.h"
 #include "BFS.h"
 #include "AStar.h"
+#include "DFS.h"
+#include "SearcherSolver.h"
+#include "MyClientHandler.h"
 #include <string>
 #include <vector>
 
@@ -16,25 +19,24 @@ using namespace std ;
 
 int main(int argc, char *argv[]) {
     int c1 = stoi(argv[1]);
+    Solver<Searchable*, string> *solver = new SearcherSolver();
+    server_side::Server *A = new MySerialServer;
+    ClientHandler *B = new MyClientHandler(solver);
+    A->open(c1, B);
+    delete (solver);
+    delete (A);
+    delete (B);
 
-//    Solver<string, string> *solver = new StringReverse();
-//    server_side::Server *A = new MyParallelServer;
-//    ClientHandler *B = new MyTestClient(solver);
-//    A->open(c1, B);
-//    delete (solver);
-//    delete (A);
-//    delete (B);
-
-vector<string> matrix_vec ;
-    matrix_vec.push_back("0,201,0,10,6") ;
-    matrix_vec.push_back("0,210,0,1,2") ;
-    matrix_vec.push_back("0,90,0,100,0") ;
-    matrix_vec.push_back("0,0,1,113,9") ;
-    matrix_vec.push_back("0,0,110,200,0") ;
-    matrix_vec.push_back("0,0") ;
-    matrix_vec.push_back("4,4") ;
-    Searchable* mat = new Matrix(matrix_vec) ;
-    Searcher* bfs = new AStar() ;
-    cout << bfs->search(mat) << endl ;
+//vector<string> matrix_vec ;
+//    matrix_vec.push_back("0,201,0,10,6") ;
+//    matrix_vec.push_back("0,210,0,1,2") ;
+//    matrix_vec.push_back("0,90,0,100,0") ;
+//    matrix_vec.push_back("0,0,1,113,9") ;
+//    matrix_vec.push_back("0,0,110,200,0") ;
+//    matrix_vec.push_back("0,0") ;
+//    matrix_vec.push_back("4,4") ;
+//    Searchable* mat = new Matrix(matrix_vec) ;
+//    Searcher* bfs = new DFS() ;
+//    cout << bfs->search(mat) << endl ;
     return 0;
 }

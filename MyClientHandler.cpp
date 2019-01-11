@@ -4,8 +4,8 @@
 
 #include "MyClientHandler.h"
 
-MyClientHandler::MyClientHandler(Solver<string, string> *string_solver) {
-    this->solver = string_solver;
+MyClientHandler::MyClientHandler(Solver<Searchable*, string> *searcher_solver) {
+    this->searcher_solver = searcher_solver;
 }
 
 void MyClientHandler::handle_client(int sock_fd) {
@@ -27,11 +27,13 @@ void MyClientHandler::handle_client(int sock_fd) {
             continue ;
         }
         line += temp_buffer;
-        if (line != "end\r\n") {
+        if (line != "end") {
             matrix_vec.push_back(line);
-        } else {
-//          temp_buffer = this->solver->solve(Matrix(matrix_vec)) ;
-            temp_buffer = "aaa" ;
+            line = "" ;
+        }
+        else {
+            Searchable* temp_matrix = new Matrix(matrix_vec) ;
+            temp_buffer = this->searcher_solver->solve(temp_matrix) ;
             answer = &temp_buffer[0];
             n = write(sock_fd, answer, temp_buffer.length());
             line = "" ;
@@ -54,5 +56,5 @@ bool MyClientHandler::is_end_line(char buffer[]) {
 }
 MyClientHandler::~MyClientHandler()
 {
-    delete(this->solver);
+    delete(this->searcher_solver);
 }

@@ -38,6 +38,7 @@ struct parallel_struct {
     ClientHandler* c_h ;
     vector<pthread_t>* threads_id ;
     int sock_fd ;
+    pthread_t this_id ;
 
 //    parallel_struct* struct_init(ClientHandler* c_h, vector<pthread_t>* threads_id, int sock_fd) {
 //        parallel_struct* new_struct = new parallel_struct ;

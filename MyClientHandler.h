@@ -17,10 +17,10 @@ using namespace std ;
 class MyClientHandler: public ClientHandler {
 
 private:
-    Solver<string, string>* solver ;
+    Solver<Searchable*, string>* searcher_solver ;
 
 public:
-    MyClientHandler(Solver<string, string>* string_solver) ;
+    MyClientHandler(Solver<Searchable*, string>* string_solver) ;
     void handle_client(int sock_fd) ;
     bool is_end_line(char buffer[]) ;
     virtual ~MyClientHandler() ;

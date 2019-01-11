@@ -1,11 +1,10 @@
-//
-// Created by royl8 on 1/10/19.
-//
 
 #include "SearcherSolver.h"
+#include "AStar.h"
 
-//string SearcherSolver::solve(Searchable problem) {
-//    return "" ;
-//}
-//
-//SearcherSolver::~SearcherSolver(){}
+string SearcherSolver::solve(Searchable* problem) {
+    this->searcher = new AStar() ;
+    return this->searcher->search(problem)   ;
+}
+
+SearcherSolver::~SearcherSolver(){}
