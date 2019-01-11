@@ -9,7 +9,7 @@
 #include <vector>
 #include <map>
 #include "State.h"
-#include "SearchableUtility.h"
+
 
 class Searchable {
     State* entry_vertex ;

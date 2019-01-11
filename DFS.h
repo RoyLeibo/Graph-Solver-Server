@@ -19,11 +19,8 @@ class DFS : public  Searcher
 {
 private:
     void searchDFS(map<string, vector<State*>> adjacent_map,map<string, bool> visited_map, State* current, State* goalState);
-    string check_direction(State* current);
 public:
     virtual string search(Searchable* searchable) ;
-    virtual int getNumberOfNodesEvaluated() ;
-    virtual string restore_solution(Searchable* searchable) ;
 
 };
 
