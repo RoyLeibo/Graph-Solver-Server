@@ -8,6 +8,7 @@
 #include "MyParallelServer.h"
 #include "Searcher.h"
 #include "BFS.h"
+#include "AStar.h"
 #include <string>
 #include <vector>
 
@@ -25,15 +26,15 @@ int main(int argc, char *argv[]) {
 //    delete (B);
 
 vector<string> matrix_vec ;
-matrix_vec.push_back("1,2,3,3,2") ;
-    matrix_vec.push_back("-1,2,3,3,2") ;
-    matrix_vec.push_back("1,2,3,3,2") ;
-    matrix_vec.push_back("2,3,1,4,3") ;
-    matrix_vec.push_back("3,2,1,5,4") ;
-    matrix_vec.push_back("0,0") ;
-    matrix_vec.push_back("4,4") ;
+    matrix_vec.push_back("0,21,0,1,6") ;
+    matrix_vec.push_back("0,21,0,100,2") ;
+    matrix_vec.push_back("0,90,0,0,0") ;
+    matrix_vec.push_back("0,0,10,10,9") ;
+    matrix_vec.push_back("0,0,0,2,0") ;
+    matrix_vec.push_back("1,2") ;
+    matrix_vec.push_back("4,3") ;
     Searchable* mat = new Matrix(matrix_vec) ;
-    Searcher* bfs = new BFS() ;
+    Searcher* bfs = new AStar() ;
     cout << bfs->search(mat) << endl ;
     return 0;
 }
