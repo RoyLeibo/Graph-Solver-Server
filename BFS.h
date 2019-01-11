@@ -16,10 +16,6 @@ class BFS: public Searcher{
 
 public:
     virtual string search(Searchable* searchable) ;
-    virtual int getNumberOfNodesEvaluated() ;
-    virtual string restore_solution(Searchable* searchable) ;
-    string check_direction(State* current) ;
-
 };
 
 

@@ -18,8 +18,7 @@ class Searcher {
 
 public:
     virtual string search(Searchable* searchable) = 0;
-    virtual int getNumberOfNodesEvaluated() = 0;
-    virtual string restore_solution(Searchable* searchable) = 0 ;
+    //virtual int getNumberOfNodesEvaluated() = 0;
 };
 
 

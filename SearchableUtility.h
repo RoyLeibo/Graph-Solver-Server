@@ -10,17 +10,21 @@
 #include <map>
 #include <string>
 #include "State.h"
+#include "Searchable.h"
 
 using namespace std ;
 
 class SearchableUtility {
-
+private:
+    static string check_direction(State* current);
 public:
     static vector<State*> getAllPossibleStates(State* s, unordered_map<string, State*>* vertex_map, int n) ;
     static map<string, vector<State*>>build_adjacent_map(unordered_map<string, State*>* vertex_map, int n) ;
     static map<string, bool> create_visited_map(unordered_map<string, State*>* vertex_map) ;
     static void set_visited_map(string index, map<string, bool>* visited_map) ;
     static string create_index(int i, int j) ;
+    static string restore_solution(Searchable* searchable);
+
 
 };
 
