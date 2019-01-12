@@ -21,7 +21,7 @@ string BestFS::search(Searchable* searchable)
         vec.erase(current);
         if((*current) == searchable->getGoalState())
         {
-            return SearchableUtility::restore_solution();
+            return SearchableUtility::restore_solution(searchable);
         }
         else
         {
@@ -31,6 +31,10 @@ string BestFS::search(Searchable* searchable)
                 if(!visited_map[current_adjacent->get_vertex_index()]) {
                     current_adjacent->set_father(*current) ;
                     visited_map[current_adjacent->get_vertex_index()] = true;
+                    if(current_adjacent == searchable->getGoalState())
+                    {
+                        return SearchableUtility::restore_solution( searchable);
+                    }
                     vec.push_back(current_adjacent);
                 }
 
