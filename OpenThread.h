@@ -28,25 +28,21 @@ class OpenThread {
   
 };
 
+// This struct is used for handling a client/s in a diferent thread.
+
 struct solver_struct {
     int port ;
     ClientHandler* c_h ;
 
 };
 
+// This struct is used to run from a different thread when the server is run in parallel.
+
 struct parallel_struct {
     ClientHandler* c_h ;
-    vector<pthread_t>* threads_id ;
+    vector<pthread_t>* threads_id_vec ;
     int sock_fd ;
-    pthread_t this_id ;
-
-//    parallel_struct* struct_init(ClientHandler* c_h, vector<pthread_t>* threads_id, int sock_fd) {
-//        parallel_struct* new_struct = new parallel_struct ;
-//        new_struct->c_h = c_h ;
-//        new_struct->threads_id = threads_id ;
-//        new_struct->sock_fd = sock_fd ;
-//        return new_struct
-//    }
+    pthread_t this_thread_id ;
 
 };
 

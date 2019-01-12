@@ -15,13 +15,16 @@
 
 using namespace std ;
 
+/* This class inherits Searchable.
+ * The class is responsible to build a matrix.
+ */
+
 class Matrix: public Searchable {
 
     unordered_map<string, State*> vertex_map ;
     State* entry_vertex ;
     State* exit_vertex ;
     int n ;
-    bool is_matrix_legal ;
 
 public:
     Matrix(vector<string> vertex_map) ;

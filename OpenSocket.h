@@ -4,6 +4,11 @@
 
 #include <iostream>
 
+/* This class open a socket using a given port.
+ * If there was a timeout during the wait for a client,
+ * the class changes the time out flag
+ */
+
 class OpenSocket {
 
     public:
