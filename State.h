@@ -12,11 +12,13 @@
 
 using namespace std ;
 
+// These class represent a vertex
+
 class State {
 
-    State* father ;
-    string vertex_index ;
-    double cost ;
+    State* father ; // it's father (came from)
+    string vertex_index ; // it's index with syntax of "i,j"
+    double cost ; // it's cost
 
 public:
     State(string vertex_index, double cost) ;
@@ -28,7 +30,8 @@ public:
     void set_cost(double cost) ;
     int get_i() ;
     int get_j();
-    double calc_heuristic(State* goal) ;
+    double calc_heuristic(State* goal) ; // function which calculate the vertex's heuristic to the
+                                         // to the goal vertex
 };
 
 
