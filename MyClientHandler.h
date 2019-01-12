@@ -14,11 +14,14 @@
 
 using namespace std ;
 
+/* This class is for handling server-client communication when the
+ * input will be a Matrix.
+ */
+
 class MyClientHandler: public ClientHandler {
 
 private:
     Solver<Searchable*, string>* searcher_solver ;
-    bool input_check(vector<string> matrix_vec) ;
     bool is_end_line(string* buffer) ;
     virtual ~MyClientHandler() ;
 

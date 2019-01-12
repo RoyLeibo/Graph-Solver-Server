@@ -9,6 +9,10 @@
 #include "OpenSocket.h"
 #include <iostream>
 
+/* This function receives a port to open the socket to and a flag
+ * to set if there was a time out.
+ */
+
 int OpenSocket::open_socket(int port, int* time_out_flag) {
   int sock_fd, clilen, new_sock_fd;
   struct sockaddr_in serv_addr, cli_addr;
@@ -16,6 +20,8 @@ int OpenSocket::open_socket(int port, int* time_out_flag) {
 
 
   sock_fd = socket(AF_INET, SOCK_STREAM, 0); // calling to socket function
+
+  // Sets the socket to be reused
 
   if (setsockopt(sock_fd, SOL_SOCKET, SO_REUSEADDR, &enable, sizeof(int)) != 0){
       perror("Cannot reuse address");
@@ -35,6 +41,7 @@ int OpenSocket::open_socket(int port, int* time_out_flag) {
   bzero((char *) &serv_addr, sizeof(serv_addr)); // initialize the socket struct
 
   // update socket's data
+
   serv_addr.sin_family = AF_INET;
   serv_addr.sin_addr.s_addr = INADDR_ANY;
   serv_addr.sin_port = htons(port);
@@ -48,33 +55,36 @@ int OpenSocket::open_socket(int port, int* time_out_flag) {
   listen(sock_fd, 5); // wait for a connection request
   clilen = sizeof(cli_addr);
 
-  timeval timeout;
-  timeout.tv_sec = 10000000000000;
-  timeout.tv_usec = 0;
-   setsockopt(sock_fd,SOL_SOCKET,SO_RCVTIMEO,(char *)&timeout, sizeof(timeout));
+  // sets timeout's definition
+
+//  timeval timeout;
+//  timeout.tv_sec = 10000000000000;
+//  timeout.tv_usec = 0;
+//   setsockopt(sock_fd,SOL_SOCKET,SO_RCVTIMEO,(char *)&timeout, sizeof(timeout));
 
   // accept the connection request
+
   new_sock_fd = accept(sock_fd, (struct sockaddr *)&cli_addr, (socklen_t*)&clilen);
-  if(new_sock_fd < 0)
-  {
-      if(errno == EWOULDBLOCK)
-      {
-          std::cout<<"timeout!"<<std::endl;
-          *time_out_flag = 1;
-          return 0;
-      }
-      else
-      {
-          perror("other error");
-          exit(3);
-      }
+//  if(new_sock_fd < 0)
+//  {
+//      if(errno == EWOULDBLOCK)
+//      {
+//          std::cout<<"timeout!"<<std::endl;
+//          *time_out_flag = 1;
+//          return 0;
+//      }
+//      else
+//      {
+//          perror("other error");
+//          exit(3);
+//      }
+//  }
+
+
+  if (new_sock_fd < 0) { // if connection failed, print error
+      perror("cannot accept your connection request");
+      exit(1);
   }
 
-
- // if (new_sock_fd < 0) { // if connection failed, print error
- //     perror("cannot accept your connection request");
-   //   exit(1);
- // }
-  std::cout << "connected" << std::endl ;
   return new_sock_fd ;
 }

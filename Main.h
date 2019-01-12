@@ -1,0 +1,13 @@
+
+#ifndef FINAL_PROJECT_SECOND_MAIN_H
+#define FINAL_PROJECT_SECOND_MAIN_H
+
+
+class Main {
+
+
+
+};
+
+
+#endif //FINAL_PROJECT_SECOND_MAIN_H

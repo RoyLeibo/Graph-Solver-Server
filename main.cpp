@@ -28,13 +28,15 @@ int main(int argc, char *argv[]) {
 //    delete (B);
 
 vector<string> matrix_vec ;
-    matrix_vec.push_back("0,201,10,6") ;
-    matrix_vec.push_back("0,210,0,1,2") ;
-    matrix_vec.push_back("0,90,0,0,0") ;
-    matrix_vec.push_back("0,0,1,10,9") ;
-    matrix_vec.push_back("0,0,10,0,0") ;
-    matrix_vec.push_back("1,2") ;
-    matrix_vec.push_back("4,3") ;
+    matrix_vec.push_back("4,0,4,0,0,0,4") ;
+    matrix_vec.push_back("4,0,4,0,4,0,4") ;
+    matrix_vec.push_back("4,0,4,0,4,0,4") ;
+    matrix_vec.push_back("4,0,4,4,4,0,4") ;
+    matrix_vec.push_back("0,0,0,0,0,0,4") ;
+    matrix_vec.push_back("0,4,4,4,4,4,4") ;
+    matrix_vec.push_back("0,0,0,0,0,0,0") ;
+    matrix_vec.push_back("2,3") ;
+    matrix_vec.push_back("6,6") ;
     Searchable* mat = new Matrix(matrix_vec) ;
     Searcher* bfs = new AStar() ;
     cout << bfs->search(mat) << endl ;
