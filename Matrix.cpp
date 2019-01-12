@@ -5,21 +5,26 @@
 #include "Matrix.h"
 
 Matrix::Matrix(vector<string> matrix_vec) {
-    build_matrix(matrix_vec);
+    if (!build_matrix(matrix_vec)) {
+        this->n = -1 ;
+    }
 }
 
-void Matrix::build_matrix(vector<string> matrix_vec) {
+bool Matrix::build_matrix(vector<string> matrix_vec) {
     int vec_size = matrix_vec.size() - 2;
     vector<string> line_vec;
     this->n = vec_size ;
     for (int i = 0; i < vec_size; i++) {
         line_vec = line_parse(matrix_vec.at(i));
-        update_map(line_vec, i);
+        if (!update_map(line_vec, i)) {
+            return false ;
+        }
     }
     line_vec = line_parse(matrix_vec.at(vec_size));
     entry_vertex = vertex_map[line_vec.at(0) + "," + line_vec.at(1)];
     line_vec = line_parse(matrix_vec.at(++vec_size));
     exit_vertex = vertex_map[line_vec.at(0) + "," + line_vec.at(1)];
+    return true ;
 }
 
 vector<string> Matrix::line_parse(string line) {
@@ -40,15 +45,19 @@ vector<string> Matrix::line_parse(string line) {
     }
 }
 
-void Matrix::update_map(vector<string> line_vec, int i) {
+bool Matrix::update_map(vector<string> line_vec, int i) {
     int vec_length = line_vec.size();
-    State *temp_state;
-    string vertex_index;
-    for (int j = 0; j < vec_length; j++) {
-        vertex_index = to_string(i) + "," + to_string(j);
-        temp_state = new State(vertex_index, stod(line_vec.at(j)));
-        vertex_map.insert(pair<string, State *>(vertex_index, temp_state));
+    if(vec_length == this->n) {
+        State *temp_state;
+        string vertex_index;
+        for (int j = 0; j < vec_length; j++) {
+            vertex_index = to_string(i) + "," + to_string(j);
+            temp_state = new State(vertex_index, stod(line_vec.at(j)));
+            vertex_map.insert(pair<string, State *>(vertex_index, temp_state));
+        }
+        return true ;
     }
+    return false ;
 }
 
 State *Matrix::getInitialState() {

@@ -21,6 +21,7 @@ class Matrix: public Searchable {
     State* entry_vertex ;
     State* exit_vertex ;
     int n ;
+    bool is_matrix_legal ;
 
 public:
     Matrix(vector<string> vertex_map) ;
@@ -30,9 +31,9 @@ public:
     virtual int get_n() ;
 
 private:
-    void build_matrix(vector<string> matrix_vec) ;
+    bool build_matrix(vector<string> matrix_vec) ;
     vector<string> line_parse(string line) ;
-    void update_map(vector<string> line_vec, int i) ;
+    bool update_map(vector<string> line_vec, int i) ;
 };
 
 

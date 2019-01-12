@@ -18,12 +18,13 @@ class MyClientHandler: public ClientHandler {
 
 private:
     Solver<Searchable*, string>* searcher_solver ;
+    bool input_check(vector<string> matrix_vec) ;
+    bool is_end_line(string* buffer) ;
+    virtual ~MyClientHandler() ;
 
 public:
     MyClientHandler(Solver<Searchable*, string>* string_solver) ;
-    void handle_client(int sock_fd) ;
-    bool is_end_line(char buffer[]) ;
-    virtual ~MyClientHandler() ;
+    virtual void handle_client(int sock_fd) ;
 
 };
 

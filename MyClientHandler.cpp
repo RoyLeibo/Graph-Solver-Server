@@ -13,7 +13,6 @@ void MyClientHandler::handle_client(int sock_fd) {
     char *answer;
     string line = "";
     string temp_buffer;
-    bool is_first_line = true;
     vector<string> matrix_vec;
     while (true) {
         memset(buffer, 0, 256) ;
@@ -22,7 +21,7 @@ void MyClientHandler::handle_client(int sock_fd) {
             perror("ERROR reading from socket");
         }
         temp_buffer = buffer ;
-        if (!is_end_line(buffer)) {
+        if (!is_end_line(&temp_buffer)) {
             line += temp_buffer ;
             continue ;
         }
@@ -33,10 +32,14 @@ void MyClientHandler::handle_client(int sock_fd) {
         }
         else {
             Searchable* temp_matrix = new Matrix(matrix_vec) ;
-            temp_buffer = this->searcher_solver->solve(temp_matrix) ;
-            answer = &temp_buffer[0];
+            if(temp_matrix->get_n() > -1) {
+                temp_buffer = this->searcher_solver->solve(temp_matrix);
+                answer = &temp_buffer[0];
+            }
+            else {
+                answer = "Matrix Is Illigal!" ;
+            }
             n = write(sock_fd, answer, temp_buffer.length());
-            line = "" ;
             if (n < 0) {
                 perror("ERROR writing to socket");
                 exit(1);
@@ -46,15 +49,24 @@ void MyClientHandler::handle_client(int sock_fd) {
     }
 }
 
-bool MyClientHandler::is_end_line(char buffer[]) {
-    string temp_buffer = buffer;
-    int is_end = temp_buffer.find("\r\n", 0);
+bool MyClientHandler::is_end_line(string* buffer) {
+    int is_end = buffer->find("\r", 0);
     if (is_end == -1) {
         return false;
     }
-    return true;
+    else {
+        buffer->erase(is_end, 2) ;
+        return true;
+    }
+
 }
+
 MyClientHandler::~MyClientHandler()
 {
     delete(this->searcher_solver);
+}
+
+bool MyClientHandler::input_check(vector<string> matrix_vec) {
+
+
 }
