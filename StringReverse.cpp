@@ -4,7 +4,7 @@
 
 StringReverse::StringReverse()
 {
-    this->fileCacheManager = new FileCacheManager();
+    this->fileCacheManager = new FileCacheManager("string_solution.csv");
 }
 
 string StringReverse::solve(string problem)
