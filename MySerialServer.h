@@ -4,6 +4,8 @@
 
 #include "Server.h"
 
+// class that solve clients problems in a differenet thread in serial
+
 class MySerialServer : public server_side::Server {
     private:
         OpenThread *openThread;
@@ -12,8 +14,6 @@ class MySerialServer : public server_side::Server {
     public:
         MySerialServer();
         virtual void open(int port, ClientHandler* client_handler);
-        virtual void stop();
-        virtual void start();
         virtual ~MySerialServer();
 };
 

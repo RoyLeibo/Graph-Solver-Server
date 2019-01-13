@@ -12,33 +12,15 @@
 #include "DFS.h"
 #include "SearcherSolver.h"
 #include "MyClientHandler.h"
+#include "Main.h"
 #include <string>
 #include <vector>
 
 using namespace std ;
 
 int main(int argc, char *argv[]) {
-//    int c1 = stoi(argv[1]);
-//    Solver<Searchable*, string> *solver = new SearcherSolver();
-//    server_side::Server *A = new MyParallelServer;
-//    ClientHandler *B = new MyClientHandler(solver);
-//    A->open(c1, B);
-//    delete (solver);
-//    delete (A);
-//    delete (B);
+    boot::Main().main(stoi(argv[1])) ;
 
-vector<string> matrix_vec ;
-    matrix_vec.push_back("4,0,4,0,0,0,4") ;
-    matrix_vec.push_back("4,0,4,0,4,0,4") ;
-    matrix_vec.push_back("4,0,4,0,4,0,4") ;
-    matrix_vec.push_back("4,0,4,4,4,0,4") ;
-    matrix_vec.push_back("0,0,0,0,0,0,4") ;
-    matrix_vec.push_back("0,4,4,4,4,4,4") ;
-    matrix_vec.push_back("0,0,0,0,0,0,0") ;
-    matrix_vec.push_back("2,3") ;
-    matrix_vec.push_back("6,6") ;
-    Searchable* mat = new Matrix(matrix_vec) ;
-    Searcher* bfs = new AStar() ;
-    cout << bfs->search(mat) << endl ;
+
     return 0;
 }

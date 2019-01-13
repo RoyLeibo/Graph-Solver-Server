@@ -14,6 +14,10 @@
 
 using namespace std ;
 
+/* This is a static class which implements some useful functions for all
+ * the searchables objects, this way we avoid double code duplication
+ */
+
 class SearchableUtility {
 private:
     static string check_direction(State* current);

@@ -7,6 +7,8 @@
 
 #include "Searcher.h"
 
+// this class is an implementation for the A* algorithm
+
 class AStar: public Searcher {
 
 public:
@@ -14,8 +16,6 @@ public:
     virtual int getNumberOfNodesEvaluated() ;
 
 private:
-    virtual string restore_solution(Searchable* searchable) ;
-    string check_direction(State* current) ;
     map<string, double> build_g_map(unordered_map<string, State*>* vertex_map) ;
     map<string, double> build_h_map(unordered_map<string, State *> *vertex_map, State* goal) ;
     map<string, double> build_f_map(unordered_map<string, State*>* vertex_map) ;

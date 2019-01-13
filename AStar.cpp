@@ -51,7 +51,7 @@ string AStar::search(Searchable *searchable) {
             if(temp_adj == goal_vertex) { // if a certain adjacent is the goal vertex
                 temp_adj->set_father(current_vertex) ;
                 // activate function to restore the solution and return the shortest path
-                return restore_solution(searchable) ;
+                return SearchableUtility::restore_solution(searchable) ;
             }
             adj_index = temp_adj->get_vertex_index();
             adj_distance_value = temp_adj->get_cost() + g_map[current_vertex->get_vertex_index()] ;
@@ -120,62 +120,6 @@ map<string, double> AStar::build_f_map(unordered_map<string, State *> *vertex_ma
         f_map.insert(pair<string, double>(it->first, init_cost));
     }
     return f_map;
-}
-
-/* This function get's a searchable and loops throw each vertex's father, to check the
- * final path from the entry to the goal.
- * The function start the loop from the goal vertex.
- */
-
-string AStar::restore_solution(Searchable *searchable) {
-    State *current = searchable->getGoalState();
-    vector<string> directions;
-    string answer = "{";
-    // while the current vertex checked is not the entry vertex, continue loop
-    while (current != searchable->getInitialState()) {
-        // activate check_direction function to check the specific step in the path and push
-        // the answer into a vector.
-        directions.push_back(check_direction(current));
-        // update the current vertex to be it's father vertex to continue the loop
-        current = current->get_father();
-    }
-
-    // join all the directions into a string
-
-    for (int i = directions.size() - 1; i >= 0; i--) {
-        answer += directions.at(i) + ", ";
-    }
-
-    answer.erase(answer.length() - 2, 2);
-    answer += "}\r\n";
-    return answer;
-}
-
-// This function checks the direction from a vertex to it's father.
-
-string AStar::check_direction(State *current) {
-    int current_i = current->get_i();
-    int current_j = current->get_j();
-    int father_i = current->get_father()->get_i();
-    int father_j = current->get_father()->get_j();
-
-    // if the current vertex and it's father in the same column
-    if (current_j == father_j) {
-        if (current_i > father_i) {
-            return "DOWN";
-        } else {
-            return "UP";
-        }
-    }
-
-    // if the current vertex and it's father in the same line
-    else if (current_i == father_i) {
-        if (current_j > father_j) {
-            return "RIGHT";
-        } else {
-            return "LEFT";
-        }
-    }
 }
 
 /* This function receives a vector of states and a state, and checks if the state
