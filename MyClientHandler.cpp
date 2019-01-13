@@ -44,6 +44,7 @@ void MyClientHandler::handle_client(int sock_fd) {
                 answer = "Matrix Is Illigal!" ;
             }
             n = write(sock_fd, answer, temp_buffer.length()); // write the solution to client
+            delete(temp_matrix) ;
             if (n < 0) {
                 perror("ERROR writing to socket");
                 exit(1);

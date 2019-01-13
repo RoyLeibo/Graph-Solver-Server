@@ -80,7 +80,6 @@ string AStar::search(Searchable *searchable) {
                     open_vec.push_back(temp_adj); // push it into open_vec
                     g_map[adj_index] = adj_distance_value; // update it's g value
                     f_map[adj_index] = adj_distance_value + h_map[adj_index] ; // update it's f value
-                    cout << adj_distance_value + h_map[adj_index] << endl ;
                 }
             }
         }

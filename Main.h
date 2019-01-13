@@ -2,6 +2,23 @@
 #ifndef FINAL_PROJECT_SECOND_MAIN_H
 #define FINAL_PROJECT_SECOND_MAIN_H
 
+#include "Server.h"
+#include "MySerialServer.h"
+#include "MyTestClient.h"
+#include "ClientHandler.h"
+#include "StringReverse.h"
+#include "Matrix.h"
+#include "MyParallelServer.h"
+#include "Searcher.h"
+#include "BFS.h"
+#include "AStar.h"
+#include "DFS.h"
+#include "SearcherSolver.h"
+#include "MyClientHandler.h"
+
+static pthread_mutex_t mutex1 ;
+static pthread_mutex_t mutex2 ;
+
 namespace boot {
 
     class Main {
@@ -16,13 +33,13 @@ namespace boot {
 //            delete (B);
 //
             vector<string> matrix_vec ;
-            matrix_vec.push_back("15,1,15,1,1,1,15") ;
-            matrix_vec.push_back("15,1,15,1,15,1,15") ;
-            matrix_vec.push_back("15,1,15,1,15,1,15") ;
-            matrix_vec.push_back("15,1,15,15,15,1,15") ;
-            matrix_vec.push_back("1,1,1,1,1,1,15") ;
-            matrix_vec.push_back("1,15,15,15,15,15,15") ;
-            matrix_vec.push_back("1,1,1,1,1,1,1") ;
+            matrix_vec.push_back("4,0,4,0,0,0,4") ;
+            matrix_vec.push_back("4,0,4,0,4,0,4") ;
+            matrix_vec.push_back("4,0,4,0,4,0,4") ;
+            matrix_vec.push_back("4,0,4,4,4,0,4") ;
+            matrix_vec.push_back("0,0,0,0,0,0,4") ;
+            matrix_vec.push_back("0,4,4,4,4,4,4") ;
+            matrix_vec.push_back("0,0,0,0,0,0,0") ;
             matrix_vec.push_back("2,3") ;
             matrix_vec.push_back("6,6") ;
             Searchable* mat = new Matrix(matrix_vec) ;

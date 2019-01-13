@@ -1,5 +1,6 @@
 
 #include "OpenThread.h"
+#include "Main.h"
 
 /* This function is used to run in serial server and solve a problem
  * received from client.
@@ -81,6 +82,7 @@ void* run_in_parallel(void* arg) {
     delete arg_struct_p ;
     arg_struct.c_h->handle_client(arg_struct.sock_fd) ;
     close(arg_struct.sock_fd) ;
+    pthread_mutex_lock(&mutex1) ;
     int threads_id_size = arg_struct.threads_id_vec->size() ;
     for(int i = 0 ; i < threads_id_size ; i++) {
         if(arg_struct.threads_id_vec->at(i) == arg_struct.this_thread_id ) {
@@ -88,6 +90,7 @@ void* run_in_parallel(void* arg) {
             break ;
         }
     }
+    pthread_mutex_unlock(&mutex1) ;
     pthread_exit(0) ;
 }
 
