@@ -15,6 +15,7 @@ class OpenSocket {
     public:
         int open_socket(int port) ;
         int listen_to_client(int sock_fd, int* time_out_flag) ;
+        ~OpenSocket();
 
 };
 
