@@ -52,3 +52,5 @@ double State::calc_heuristic(State* goal) {
     int goal_j = goal->get_j() ;
     return sqrt(pow((double)(current_i-goal_i), 2) + pow((double)(current_j-goal_j), 2)) ;
 }
+
+State::~State() {};

@@ -25,6 +25,7 @@ class OpenThread {
 
   public:
     pthread_t open_thread(int port, ClientHandler* c_h, int server_client_handle) ;
+    ~OpenThread();
   
 };
 

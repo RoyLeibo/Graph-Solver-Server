@@ -128,3 +128,5 @@ pthread_t OpenThread::open_thread(int port, ClientHandler* c_h, int server_clien
         case(ParallelServer): pthread_create(&tid, nullptr, run_solver_parallel, s_s) ; return tid ;
     }
 }
+
+OpenThread::~OpenThread(){};

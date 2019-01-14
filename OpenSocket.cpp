@@ -90,3 +90,5 @@ int OpenSocket::listen_to_client(int sock_fd, int* time_out_flag) {
 //  }
     return new_sock_fd ;
 }
+
+OpenSocket::~OpenSocket(){};

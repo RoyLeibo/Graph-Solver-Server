@@ -20,6 +20,7 @@ public:
     virtual State* getGoalState() = 0;
     virtual unordered_map<string, State*>* get_vertex_map() = 0 ;
     virtual int get_n() = 0 ;
+    virtual ~Searchable(){};
 
 };
 

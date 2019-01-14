@@ -32,6 +32,7 @@ public:
     virtual State* getGoalState() ;
     virtual unordered_map<string, State*>* get_vertex_map() ;
     virtual int get_n() ;
+    virtual ~Matrix();
 
 private:
     bool build_matrix(vector<string> matrix_vec) ;

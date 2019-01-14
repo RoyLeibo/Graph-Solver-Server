@@ -14,8 +14,10 @@ using namespace std ;
 
 class BFS: public Searcher{
 
-public:
-    virtual string search(Searchable* searchable) ;
+    public:
+        virtual string search(Searchable* searchable) ;
+        virtual ~BFS();
+
 };
 
 

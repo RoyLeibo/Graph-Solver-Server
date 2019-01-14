@@ -12,16 +12,20 @@ vector<State*> SearchableUtility::getAllPossibleStates(State* s, unordered_map<s
     vector<State*> possibleStates;
     int this_i = s->get_i() ;
     int this_j = s->get_j() ;
-    if(this_i+1 < n) { // if the vertex has an adjacent below
+    if(this_i+1 < n  && (vertex_map->at(create_index(this_i+1, this_j))->get_cost() > -1) ){
+        // if the vertex has an adjacent below
         possibleStates.push_back(vertex_map->at(create_index(this_i+1, this_j))) ;
     }
-    if(this_i-1 >= 0) { // if the vertex has an adjacent above
+    if(this_i-1 >= 0 && (vertex_map->at(create_index(this_i+1, this_j))->get_cost() > -1)) {
+        // if the vertex has an adjacent above
         possibleStates.push_back(vertex_map->at(create_index(this_i-1, this_j))) ;
     }
-    if(this_j+1 < n) { // if the vertex has an adjacent in it's right
+    if(this_j+1 < n && (vertex_map->at(create_index(this_i+1, this_j))->get_cost() > -1)) {
+        // if the vertex has an adjacent in it's right
         possibleStates.push_back(vertex_map->at(create_index(this_i, this_j+1))) ;
     }
-    if(this_j-1 >= 0) { // if the vertex has an adjacent in it's left
+    if(this_j-1 >= 0 && (vertex_map->at(create_index(this_i+1, this_j))->get_cost() > -1)) {
+        //if the vertex has an adjacent in it's left
         possibleStates.push_back(vertex_map->at(create_index(this_i, this_j-1))) ;
     }
     return possibleStates;

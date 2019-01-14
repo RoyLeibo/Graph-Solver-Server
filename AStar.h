@@ -14,6 +14,7 @@ class AStar: public Searcher {
 public:
     virtual string search(Searchable* searchable) ;
     virtual int getNumberOfNodesEvaluated() ;
+    virtual ~AStar();
 
 private:
     map<string, double> build_g_map(unordered_map<string, State*>* vertex_map) ;
