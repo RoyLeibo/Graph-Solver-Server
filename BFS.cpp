@@ -53,3 +53,5 @@ string BFS::search(Searchable* searchable) {
         }
     }
 }
+
+BFS::~BFS() {};

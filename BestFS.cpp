@@ -150,3 +150,5 @@ map<string, double> BestFS::build_f_map(unordered_map<string, State *> *vertex_m
     }
     return c_map;
 }
+
+BestFS::~BestFS(){};

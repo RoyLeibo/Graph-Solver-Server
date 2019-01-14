@@ -159,3 +159,5 @@ vector<State *>::iterator AStar::find_lowest_cost(vector<State *> *vec, map<stri
 }
 
 int AStar::getNumberOfNodesEvaluated() {}
+
+AStar:: ~AStar(){};

@@ -17,6 +17,7 @@ class BestFS : public Searcher {
        // bool find_in_vec(vector<State*> vec,State );
     public:
         virtual string search(Searchable* searchable);
+        virtual ~BestFS();
         // string searchtwo(Searchable* searchable);
 };
 

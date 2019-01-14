@@ -59,3 +59,5 @@ string DFS::search(Searchable* searchable)
      }
  }
 
+DFS::~DFS(){};
+

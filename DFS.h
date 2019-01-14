@@ -21,6 +21,7 @@ private:
     void searchDFS(map<string, vector<State*>> adjacent_map,map<string, bool> visited_map, State* current, State* goalState);
 public:
     virtual string search(Searchable* searchable) ;
+    virtual ~DFS();
 
 };
 
