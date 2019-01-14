@@ -81,17 +81,19 @@ string SearchableUtility::restore_solution(Searchable *searchable) {
     State *current = searchable->getGoalState();
     vector<string> directions;
     string answer = "{";
+    int cost_counter = 0 ;
     // while the current vertex checked is not the entry vertex, continue loop
     while (current != searchable->getInitialState()) {
         // activate check_direction function to check the specific step in the path and push
         // the answer into a vector.
+        cost_counter += current->get_cost() ;
         directions.push_back(check_direction(current));
         // update the current vertex to be it's father vertex to continue the loop
         current = current->get_father();
     }
 
     // join all the directions into a string
-
+    cout<< "Path Cost: " << cost_counter << endl ;
     for (int i = directions.size() - 1; i >= 0; i--) {
         answer += directions.at(i) + ", ";
     }
