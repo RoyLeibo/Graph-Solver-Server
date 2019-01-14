@@ -10,11 +10,12 @@ void* run_solver_serial(void* arg) {
   struct solver_struct* arg_struct_p = (solver_struct*)arg ;
   struct solver_struct arg_struct = *arg_struct_p;
   delete arg_struct_p;
-  int sock_fd ;
   int time_out_flag = 0 ;
-  while(true) {
+  OpenSocket* open_socket ;
+  int sock_fd = open_socket->open_socket(arg_struct.port) ;
+    while(true) {
     // activate a function that open a socket using a specific port
-    sock_fd = OpenSocket().open_socket(arg_struct.port, &time_out_flag) ;
+    open_socket->listen_to_client(arg_struct.port, &time_out_flag) ;
     if(time_out_flag == 0) { // if there was no timeout
         // activate function which communicate with the client using the sock id which opened
         arg_struct.c_h->handle_client(sock_fd) ;
@@ -38,26 +39,37 @@ void* run_solver_parallel(void* arg) {
     struct solver_struct arg_struct = *arg_struct_p;
     delete arg_struct_p;
     vector<pthread_t> threads_id ; // initialize a vector for all the thread's ids
-    int sock_fd ;
+    ClientHandler* c_h = arg_struct.c_h ;
+    OpenSocket* open_socket ;
+    int sock_fd = open_socket->open_socket(arg_struct.port) ;
+    int new_sock_fd ;
     int time_out_flag = 0 ;
     while(true) {
+
+        new_sock_fd = open_socket->listen_to_client(sock_fd, &time_out_flag) ;
+
         // activate a function that open a socket using a specific port
-        sock_fd = OpenSocket().open_socket(arg_struct.port, &time_out_flag) ;
+
         if(time_out_flag == 0) { // if there was no timeout
+
             pthread_t tid; // initialize a new thread id
-            parallel_struct* p_s = new parallel_struct ; // initialize a new struct to run in parallel
-            ClientHandler* c_h_copy = arg_struct.c_h ; // initialize a client handler
-            p_s->c_h = c_h_copy ; // insert the copy into struct
-            p_s->threads_id_vec = &threads_id ; // insert the vector into struct
-            p_s->sock_fd = sock_fd; // insert the sock id into struct
-            p_s->this_thread_id = tid ; // insert this thread id into struct
             threads_id.push_back(tid); // push this thread's id into the vec
+
+            parallel_struct* p_s = new parallel_struct ; // initialize a new struct to run in parallel
+            p_s->c_h = c_h ; // insert the copy into struct
+            p_s->threads_id_vec = &threads_id ; // insert the vector into struct
+            p_s->sock_fd = new_sock_fd ; // insert the sock id into struct
+            p_s->this_thread_id = tid ; // insert this thread id into struct
+
             // creates a new thread to run in parallel using the struct that has just initialize and the
             // run_in_parallel thread function.
             // When the thread is finished, it will delete it's id from the vector.
             pthread_create(&tid, nullptr, run_in_parallel, p_s);
         }
         else {
+            delete(open_socket) ;
+            delete(c_h) ;
+
             // When there was a time out, the program will not receive any more clients.
             // The loop will run throw the threads_id vector and using the function "pthread_join"
             // function to "wait" until all threads is finished handling it's clients.
