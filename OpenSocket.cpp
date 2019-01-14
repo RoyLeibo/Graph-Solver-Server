@@ -88,3 +88,5 @@ int OpenSocket::open_socket(int port, int* time_out_flag) {
 
   return new_sock_fd ;
 }
+
+OpenSocket::~OpenSocket(){};

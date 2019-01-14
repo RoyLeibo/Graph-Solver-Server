@@ -32,6 +32,7 @@ public:
     int get_j();
     double calc_heuristic(State* goal) ; // function which calculate the vertex's heuristic to the
                                          // to the goal vertex
+    ~State();
 };
 
 

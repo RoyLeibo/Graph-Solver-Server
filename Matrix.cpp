@@ -99,3 +99,5 @@ unordered_map<string, State*>* Matrix::get_vertex_map() {
 int Matrix::get_n() {
     return this->n ;
 }
+
+Matrix::~Matrix(){};
