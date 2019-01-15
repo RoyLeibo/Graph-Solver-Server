@@ -39,7 +39,7 @@ void* run_solver_parallel(void* arg) {
     struct solver_struct* arg_struct_p = (solver_struct*)arg ;
     struct solver_struct arg_struct = *arg_struct_p;
     delete arg_struct_p;
-    vector<pthread_t> threads_id ; // initialize a vector for all the thread's ids
+    vector<pthread_t*> threads_id ; // initialize a vector for all the thread's ids
     ClientHandler* c_h = arg_struct.c_h ;
     OpenSocket* open_socket ;
     int sock_fd = open_socket->open_socket(arg_struct.port) ;
@@ -48,37 +48,57 @@ void* run_solver_parallel(void* arg) {
     bool is_first_client = true ;
     while(true) {
         new_sock_fd = open_socket->listen_to_client(sock_fd, &time_out_flag, &is_first_client) ;
-
+//        cout << time_out_flag << endl ;
         // activate a function that open a socket using a specific port
+        for (int i = 0 ; i < threads_id.size() ; i++) {
+            cout << *threads_id[i] << endl ;
+        }
+        cout << "finish print vector" << endl ;
 
         if(time_out_flag == 0) { // if there was no timeout
 
-            pthread_t tid; // initialize a new thread id
-            cout << tid<< endl ;
-            threads_id.push_back(tid); // push this thread's id into the vec
+            pthread_t tid ; // initialize a new thread id
+//            cout << tid << endl ;
+            pthread_t* tid_p = new pthread_t(tid) ;
+//            cout << *tid_p<< endl ;
+            threads_id.push_back(tid_p); // push this thread's id into the vec
 
             parallel_struct* p_s = new parallel_struct ; // initialize a new struct to run in parallel
             p_s->c_h = c_h ; // insert the copy into struct
             p_s->threads_id_vec = &threads_id ; // insert the vector into struct
             p_s->sock_fd = new_sock_fd ; // insert the sock id into struct
-            p_s->this_thread_id = tid ; // insert this thread id into struct
-
+            p_s->this_thread_id = tid_p ; // insert this thread id into struct
+//            cout << *tid_p<< endl ;
             // creates a new thread to run in parallel using the struct that has just initialize and the
             // run_in_parallel thread function.
             // When the thread is finished, it will delete it's id from the vector.
+            for (int i = 0 ; i < threads_id.size() ; i++) {
+                cout << *threads_id[i] << endl ;
+            }
+            cout << "finish print vector before create" << endl ;
             pthread_create(&tid, nullptr, run_in_parallel, p_s);
+            for (int i = 0 ; i < threads_id.size() ; i++) {
+                cout << *threads_id[i] << endl ;
+            }
+            cout << "finish print vector after create" << endl ;
         }
         else {
             pthread_mutex_lock(&mutex3) ;
+            cout << "before join" << endl ;
             // When there was a time out, the program will not receive any more clients.
             // The loop will run throw the threads_id vector and using the function "pthread_join"
             // function to "wait" until all threads is finished handling it's clients.
-
-            for (auto it: threads_id) {
-                pthread_join(it, NULL) ;
-                cout << "join thread " << it << endl ;
+            for (int i = 0 ; i < threads_id.size() ; i++) {
+                cout << *threads_id[i] << endl ;
             }
+            cout << "finish print vector" << endl ;
+            for (int i = 0 ; i < threads_id.size() ; i++) {
+                cout << "inside join loop with it = " << *threads_id[i] << endl ;
 
+                    pthread_join(*threads_id[i], nullptr);
+                    cout << "join thread " <<*threads_id[i] << endl;
+
+            }
             pthread_mutex_unlock(&mutex3) ;
             break ;
         }
@@ -92,6 +112,7 @@ void* run_solver_parallel(void* arg) {
  */
 
 void* run_in_parallel(void* arg) {
+    cout << "inside other thread" << endl ;
     struct parallel_struct* arg_struct_p = (parallel_struct*)arg ;
     struct parallel_struct arg_struct = *arg_struct_p;
     delete arg_struct_p ;

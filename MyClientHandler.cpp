@@ -21,6 +21,7 @@ void MyClientHandler::handle_client(int sock_fd) {
     while (true) {
         memset(buffer, 0, 256) ; // zeros the buffer
         int n = read(sock_fd, buffer, 256); // reads client's input
+        cout << "red line" << endl ;
         if (n < 0) { // if read is fail, print error
             perror("ERROR reading from socket");
         }
@@ -30,14 +31,18 @@ void MyClientHandler::handle_client(int sock_fd) {
             continue ;
         }
         line += temp_buffer;
+        cout << line << endl ;
         if (line != "end") { // if line is not "end"
             matrix_vec.push_back(line); // push it into the matrix vector
             line = "" ;
         }
         else {
             Searchable* temp_matrix = new Matrix(matrix_vec) ; // calling the Matrix constructor that initialize a matrix
+            cout << "before solve" << endl ;
             temp_buffer = this->searcher_solver->solve(matrix_vec) ;
+            cout << "solve problem" << endl ;
             answer = &temp_buffer[0] ;
+            cout << "answer: " << answer << endl ;
             n = write(sock_fd, answer, temp_buffer.length()); // write the solution to client
             delete(temp_matrix) ;
             if (n < 0) {

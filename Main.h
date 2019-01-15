@@ -27,18 +27,29 @@ namespace boot {
     class Main {
     public:
         void main(int port) {
-            Solver<vector<string>, string> *solver = new GraphSolver();
-            server_side::Server *A = new MyParallelServer;
-            ClientHandler *B = new MyClientHandler(solver);
-            A->open(port, B);
-            cout << "end of main" << endl ;
+//            Solver<vector<string>, string> *solver = new GraphSolver();
+//            server_side::Server *A = new MyParallelServer;
+//            ClientHandler *B = new MyClientHandler(solver);
+//            A->open(port, B);
+//            cout << "end of main" << endl ;
 //            delete (solver);
 //            delete (A);
 //            delete (B);
 
-//            vector<string> matrix_vec ;
-//            matrix_vec.push_back("5,1,5,1,1,1,5") ;
-//            matrix_vec.push_back("5,1,5,1,5,1,5") ;
+            vector<string> matrix_vec ;
+            string line ;
+            for (int i = 0 ; i < 10 ; i++) {
+                for (int j = 0 ; j < 10 ; j++) {
+                    line += to_string(rand() % 20 - 1)+',' ;
+
+                }
+                line.erase(line.length()-1, 1) ;
+                matrix_vec.push_back(line) ;
+                cout << line << endl;
+                line = "" ;
+            }
+//            matrix_vec.push_back("5,10,5,4,7,2,5,") ;
+//            matrix_vec.push_back("5,1,5,1,5,1,5,10,") ;
 //            matrix_vec.push_back("5,1,5,1,5,1,5") ;
 //            matrix_vec.push_back("5,1,5,5,5,1,5") ;
 //            matrix_vec.push_back("1,1,1,1,1,1,5") ;

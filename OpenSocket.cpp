@@ -69,7 +69,7 @@ int OpenSocket::listen_to_client(int sock_fd, int* time_out_flag, bool* is_first
     }
 
     else {
-        timeout.tv_sec = 10000000000 ;
+        timeout.tv_sec = 50000;
     }
 
     timeout.tv_usec = 0;
