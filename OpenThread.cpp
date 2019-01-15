@@ -12,11 +12,15 @@ void* run_solver_serial(void* arg) {
   delete arg_struct_p;
   int time_out_flag = 0 ;
   OpenSocket* open_socket ;
-  bool is_first_client = true ;
-  int sock_fd = open_socket->open_socket(arg_struct.port) ;
+    int sock_fd = open_socket->open_socket(arg_struct.port) ;
+    bool is_first_client = true ;
+    int clilen ;
+    struct sockaddr_in cli_addr ;
+    listen(sock_fd, std::numeric_limits<int>::max()); // wait for a connection request
+    clilen = sizeof(cli_addr);
     while(true) {
     // activate a function that open a socket using a specific port
-    open_socket->listen_to_client(arg_struct.port, &time_out_flag, &is_first_client) ;
+    open_socket->listen_to_client(arg_struct.port, &time_out_flag, &is_first_client, clilen) ;
     if(time_out_flag == 0) { // if there was no timeout
         // activate function which communicate with the client using the sock id which opened
         arg_struct.c_h->handle_client(sock_fd) ;
@@ -41,20 +45,23 @@ void* run_solver_parallel(void* arg) {
     delete arg_struct_p;
     vector<pthread_t> threads_id ; // initialize a vector for all the thread's ids
     ClientHandler* c_h = arg_struct.c_h ;
-    OpenSocket* open_socket ;
-    int sock_fd = open_socket->open_socket(arg_struct.port) ;
-    int new_sock_fd ;
     int time_out_flag = 0 ;
     bool is_first_client = true ;
+    OpenSocket* open_socket ;
+    int sock_fd = open_socket->open_socket(arg_struct.port) ;
+    int new_sock_fd, clilen ;
+    struct sockaddr_in cli_addr ;
+    listen(sock_fd, std::numeric_limits<int>::max()); // wait for a connection request
+    clilen = sizeof(cli_addr);
     while(true) {
-        new_sock_fd = open_socket->listen_to_client(sock_fd, &time_out_flag, &is_first_client) ;
+        new_sock_fd = open_socket->listen_to_client(sock_fd, &time_out_flag, &is_first_client, clilen) ;
 
         // activate a function that open a socket using a specific port
 
         if(time_out_flag == 0) { // if there was no timeout
 
-            pthread_t tid; // initialize a new thread id
-            cout << tid<< endl ;
+            pthread_t tid ; // initialize a new thread id
+            pthread_t* tid_p = new pthread_t(tid) ;
             threads_id.push_back(tid); // push this thread's id into the vec
 
             parallel_struct* p_s = new parallel_struct ; // initialize a new struct to run in parallel
@@ -62,11 +69,11 @@ void* run_solver_parallel(void* arg) {
             p_s->threads_id_vec = &threads_id ; // insert the vector into struct
             p_s->sock_fd = new_sock_fd ; // insert the sock id into struct
             p_s->this_thread_id = tid ; // insert this thread id into struct
-
             // creates a new thread to run in parallel using the struct that has just initialize and the
             // run_in_parallel thread function.
-            // When the thread is finished, it will delete it's id from the vector.
+            // When the thread is finished, it will delete it's id from the ve
             pthread_create(&tid, nullptr, run_in_parallel, p_s);
+
         }
         else {
             pthread_mutex_lock(&mutex3) ;
@@ -74,11 +81,10 @@ void* run_solver_parallel(void* arg) {
             // The loop will run throw the threads_id vector and using the function "pthread_join"
             // function to "wait" until all threads is finished handling it's clients.
 
-            for (auto it: threads_id) {
-                pthread_join(it, NULL) ;
-                cout << "join thread " << it << endl ;
+            for (int i = 0 ; i < threads_id.size() ; i++) {
+                    pthread_join(threads_id[i], nullptr);
+                    cout << "join to " << threads_id[i] << endl ;
             }
-
             pthread_mutex_unlock(&mutex3) ;
             break ;
         }

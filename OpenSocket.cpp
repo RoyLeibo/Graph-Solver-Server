@@ -54,27 +54,27 @@ int OpenSocket::open_socket(int port) {
   return sock_fd ;
 }
 
-int OpenSocket::listen_to_client(int sock_fd, int* time_out_flag, bool* is_first_client) {
-    int clilen, new_sock_fd;
+int OpenSocket::listen_to_client(int sock_fd, int* time_out_flag, bool* is_first_client, int clilen) {
+    int new_sock_fd;
     struct sockaddr_in cli_addr ;
 
-    listen(sock_fd, std::numeric_limits<int>::max()); // wait for a connection request
-    clilen = sizeof(cli_addr);
-
     // sets timeout's definition
-    timeval timeout;
+    timeval client_timeout ;
+    client_timeout.tv_sec = 0;
+    client_timeout.tv_usec = 0 ;
+    timeval server_timeout ;
     if(*is_first_client) {
-        timeout.tv_sec = std::numeric_limits<int>::max() ;
+        server_timeout.tv_sec = std::numeric_limits<int>::max() ;
         *is_first_client = false ;
     }
 
     else {
-        timeout.tv_sec = 10000000000 ;
+        server_timeout.tv_sec = 5;
     }
 
-    timeout.tv_usec = 0;
-    setsockopt(sock_fd,SOL_SOCKET,SO_RCVTIMEO,(char *)&timeout, sizeof(timeout));
-
+    server_timeout.tv_usec = 0;
+    setsockopt(sock_fd,SOL_SOCKET,SO_RCVTIMEO,(char *)&server_timeout, sizeof(server_timeout));
+    setsockopt(new_sock_fd,SOL_SOCKET,SO_RCVTIMEO,(char *)&client_timeout, sizeof(client_timeout));
     // accept the connection request
 
     new_sock_fd = accept(sock_fd, (struct sockaddr *)&cli_addr, (socklen_t*)&clilen);
@@ -96,6 +96,7 @@ int OpenSocket::listen_to_client(int sock_fd, int* time_out_flag, bool* is_first
 //      perror("cannot accept your connection request");
 //      exit(1);
 //  }
+
     return new_sock_fd ;
 }
 

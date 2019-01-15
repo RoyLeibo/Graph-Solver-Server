@@ -8,6 +8,7 @@ class MyParallelServer : public server_side::Server {
 private:
     OpenThread *openThread;
     ClientHandler* client_handler ;
+    vector<pthread_t> threads_id ;
 
     public:
         MyParallelServer() ;

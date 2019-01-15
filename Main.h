@@ -1,6 +1,7 @@
 
 #ifndef FINAL_PROJECT_SECOND_MAIN_H
 #define FINAL_PROJECT_SECOND_MAIN_H
+
 #include "Server.h"
 #include "MySerialServer.h"
 #include "MyTestClient.h"
@@ -60,7 +61,7 @@ namespace boot {
 //            matrix_vec.push_back("1,1,1,1,1,1,1") ;
 //            matrix_vec.push_back("0,0") ;
 //            matrix_vec.push_back("6,6") ;
-            cout << "a" << endl ;
+cout << "a" << endl ;
             Searchable* mat = new Matrix(matrix_vec) ;
             Searcher* bfs = new DFS() ;
             cout << bfs->search(mat) << endl ;
@@ -71,5 +72,6 @@ namespace boot {
     };
 
 }
+
 
 #endif //FINAL_PROJECT_SECOND_MAIN_H
