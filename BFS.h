@@ -13,10 +13,13 @@
 using namespace std ;
 
 class BFS: public Searcher{
+    private:
+        int counter;
 
     public:
         virtual string search(Searchable* searchable) ;
         virtual ~BFS();
+        virtual int getNumberOfNodesEvaluated();
 
 };
 

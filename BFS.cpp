@@ -16,11 +16,17 @@ string BFS::search(Searchable* searchable) {
     map<string, vector<State*>> adjacent_map = SearchableUtility::build_adjacent_map(vertex_map , searchable->get_n()) ;
     //create visited map
     map<string, bool> visited_map = SearchableUtility::create_visited_map(vertex_map) ;
+    if(searchable->getInitialState() == searchable->getGoalState())
+    {
+        return "{}";
+    }
     //push the start state to the queue
     q.push(searchable->getInitialState()) ;
     SearchableUtility::set_visited_map(searchable->getInitialState()->get_vertex_index(), &visited_map) ;
     State* current_vertex ;
     State* current_adjacent ;
+    visited_map[q.front()->get_vertex_index()] = true;
+    this->counter++;
     //while the queue is not empty
     while(q.empty() == false) {
         //save the first organ in the queue and delete him from th queue
@@ -31,10 +37,6 @@ string BFS::search(Searchable* searchable) {
         //move on all the adjacent
         for (int i = 0 ; i < temp_adjacent.size() ; i++) {
             current_adjacent = temp_adjacent[i] ;
-            if(current_adjacent->get_cost() < 0)
-            {
-               visited_map[current_adjacent->get_vertex_index()] = true;
-            }
             //if the state have not visited yet
             if(visited_map[current_adjacent->get_vertex_index()] == false) {
                 //set the current vertex to be his father
@@ -44,14 +46,20 @@ string BFS::search(Searchable* searchable) {
                     //push the current adjacent to the queue and set him as visited
                     q.push(current_adjacent);
                     visited_map[current_adjacent->get_vertex_index()] = true;
+                    this->counter++;
                 }
                 //if the adjacent is the goalState restore the solution
                 else {
+                    cout<<this->counter<<"\n"<<endl;
                     return SearchableUtility::restore_solution(searchable) ;
                 }
             }
         }
     }
+}
+int BFS:: getNumberOfNodesEvaluated()
+{
+    return this->counter;
 }
 
 BFS::~BFS() {};

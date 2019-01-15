@@ -12,6 +12,7 @@
 
 class BestFS : public Searcher {
     private:
+        int counter;
         static vector<State*>::iterator find_lowest_cost(vector<State*>* vec, map<string,double>* cost_to_vertex_map) ;
         static map<string, double> build_f_map(unordered_map<string, State *> *vertex_map);
        // bool find_in_vec(vector<State*> vec,State );
@@ -19,6 +20,7 @@ class BestFS : public Searcher {
         virtual string search(Searchable* searchable);
         virtual ~BestFS();
         // string searchtwo(Searchable* searchable);
+        virtual int getNumberOfNodesEvaluated();
 };
 
 

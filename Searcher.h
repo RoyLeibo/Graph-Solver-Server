@@ -19,7 +19,7 @@ class Searcher {
     public:
         virtual string search(Searchable* searchable) = 0;
         virtual ~Searcher(){};
-        //virtual int getNumberOfNodesEvaluated() = 0;
+        virtual int getNumberOfNodesEvaluated() = 0;
 };
 
 

@@ -17,12 +17,14 @@ using namespace std;
 
 class DFS : public  Searcher
 {
-private:
-    void searchDFS(map<string, vector<State*>> adjacent_map,map<string, bool> visited_map, State* current, State* goalState);
-public:
-    virtual string search(Searchable* searchable) ;
-    virtual ~DFS();
-
+    private:
+        int counter;
+        void searchDFS(map<string, vector<State*>> adjacent_map,map<string,
+                bool> visited_map, State* current, State* goalState);
+    public:
+        virtual string search(Searchable* searchable) ;
+        virtual ~DFS();
+        virtual int getNumberOfNodesEvaluated();
 };
 
 
