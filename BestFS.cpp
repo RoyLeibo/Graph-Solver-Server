@@ -23,6 +23,10 @@ string BestFS::search(Searchable* searchable)
     State* current_adjacent ;
     State* current_vertex;
     //push the initial state to the vector
+    if(searchable->getInitialState() == searchable->getGoalState())
+    {
+        return "{}";
+    }
     vec.push_back(searchable->getInitialState());
     while(!vec.empty())
     {
@@ -62,6 +66,7 @@ string BestFS::search(Searchable* searchable)
             }
         }
     }
+    return "-1\r\n";
 }
 
 /*string BestFS::searchtwo(Searchable* searchable)

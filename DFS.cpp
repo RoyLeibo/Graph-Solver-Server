@@ -19,7 +19,7 @@ string DFS::search(Searchable* searchable)
     //use searchDFS in recursion to find the possible way to goalState from initialState
     searchDFS(adjacent_map,visited_map,searchable->getInitialState(),searchable->getGoalState());
     //restore the solution
-    cout<< this->evaluated_nodes<<"\n"<<endl;
+    cout<< this->counter<<"\n"<<endl;
     return SearchableUtility::restore_solution(searchable);
 
 }
@@ -33,7 +33,7 @@ string DFS::search(Searchable* searchable)
  {
      //mark the vertex as visited
      visited_map[current->get_vertex_index()] = true;
-     this->evaluated_nodes++;
+     this->counter++;
      vector<State*> temp_adjacent = adjacent_map[current->get_vertex_index()] ;
      State* current_adjacent ;
      //move on all vertex adjacent
@@ -59,7 +59,7 @@ string DFS::search(Searchable* searchable)
 
 int DFS:: getNumberOfNodesEvaluated()
 {
-    return this->evaluated_nodes;
+    return this->counter;
 }
 
 DFS::~DFS(){};
