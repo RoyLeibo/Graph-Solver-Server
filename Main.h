@@ -50,6 +50,8 @@ namespace boot {
             }
             matrix_vec.push_back("0,0") ;
             matrix_vec.push_back("49,49") ;
+//            matrix_vec.push_back("0,0") ;
+//            matrix_vec.push_back("49,49") ;
 //            matrix_vec.push_back("5,10,5,4,7,2,5,") ;
 //            matrix_vec.push_back("5,1,5,1,5,1,5,10,") ;
 //            matrix_vec.push_back("5,1,5,1,5,1,5") ;
@@ -59,6 +61,7 @@ namespace boot {
 //            matrix_vec.push_back("1,1,1,1,1,1,1") ;
 //            matrix_vec.push_back("0,0") ;
 //            matrix_vec.push_back("6,6") ;
+cout << "a" << endl ;
             Searchable* mat = new Matrix(matrix_vec) ;
             Searcher* bfs = new DFS() ;
             cout << bfs->search(mat) << endl ;
