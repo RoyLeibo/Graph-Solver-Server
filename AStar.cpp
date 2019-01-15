@@ -28,6 +28,7 @@ string AStar::search(Searchable *searchable) {
 
     g_map[start_vertex->get_vertex_index()] = 0;
     f_map[start_vertex->get_vertex_index()] = h_map[start_vertex->get_vertex_index()] ;
+    this->evaluated_nodes = 1 ;
 
     vector<State *>::iterator low_cost_it;
     vector<State *>::iterator begin_it;
@@ -80,10 +81,12 @@ string AStar::search(Searchable *searchable) {
                     open_vec.push_back(temp_adj); // push it into open_vec
                     g_map[adj_index] = adj_distance_value; // update it's g value
                     f_map[adj_index] = adj_distance_value + h_map[adj_index] ; // update it's f value
+                    this->evaluated_nodes ;
                 }
             }
         }
     }
+    return "-1\r\n" ;
 }
 
 // Initialize the g_map value for all each vertex in the matrix to be 0
@@ -158,6 +161,8 @@ vector<State *>::iterator AStar::find_lowest_cost(vector<State *> *vec, map<stri
     return min_cost_it;
 }
 
-int AStar::getNumberOfNodesEvaluated() {}
+int AStar::getNumberOfNodesEvaluated() {
+    return this->evaluated_nodes ;
+}
 
 AStar:: ~AStar(){};

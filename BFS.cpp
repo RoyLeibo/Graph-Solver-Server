@@ -26,7 +26,7 @@ string BFS::search(Searchable* searchable) {
     State* current_vertex ;
     State* current_adjacent ;
     visited_map[q.front()->get_vertex_index()] = true;
-    this->counter++;
+    this->evaluated_nodes++;
     //while the queue is not empty
     while(q.empty() == false) {
         //save the first organ in the queue and delete him from th queue
@@ -46,11 +46,11 @@ string BFS::search(Searchable* searchable) {
                     //push the current adjacent to the queue and set him as visited
                     q.push(current_adjacent);
                     visited_map[current_adjacent->get_vertex_index()] = true;
-                    this->counter++;
+                    this->evaluated_nodes++;
                 }
                 //if the adjacent is the goalState restore the solution
                 else {
-                    cout<<this->counter<<"\n"<<endl;
+                    cout<<this->evaluated_nodes<<"\n"<<endl;
                     return SearchableUtility::restore_solution(searchable) ;
                 }
             }
@@ -60,7 +60,7 @@ string BFS::search(Searchable* searchable) {
 }
 int BFS:: getNumberOfNodesEvaluated()
 {
-    return this->counter;
+    return this->evaluated_nodes;
 }
 
 BFS::~BFS() {};

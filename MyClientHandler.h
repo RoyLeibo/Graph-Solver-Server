@@ -21,12 +21,12 @@ using namespace std ;
 class MyClientHandler: public ClientHandler {
 
 private:
-    Solver<Searchable*, string>* searcher_solver ;
+    Solver<vector<string>, string>* searcher_solver ;
     bool is_end_line(string* buffer) ;
     virtual ~MyClientHandler() ;
 
 public:
-    MyClientHandler(Solver<Searchable*, string>* string_solver) ;
+    MyClientHandler(Solver<vector<string>, string>* string_solver) ;
     virtual void handle_client(int sock_fd) ;
 
 };

@@ -12,9 +12,10 @@
 #include "Searchable.h"
 #include "BestFS.h"
 #include "Matrix.h"
-#include "vector"
+#include "Searchable.h"
+#include <vector>
 
-class GraphSolver : public Solver<std::string,std::vector<std::string>> {
+class GraphSolver : public Solver<std::vector<std::string>,std::string> {
     private:
         FileCacheManager *fileCacheManager;
         Searchable *searchable;

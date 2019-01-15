@@ -1,7 +1,7 @@
 
 #include "MyClientHandler.h"
 
-MyClientHandler::MyClientHandler(Solver<Searchable*, string> *searcher_solver) {
+MyClientHandler::MyClientHandler(Solver<vector<string>, string> *searcher_solver) {
     this->searcher_solver = searcher_solver;
 }
 
@@ -35,14 +35,8 @@ void MyClientHandler::handle_client(int sock_fd) {
         }
         else {
             Searchable* temp_matrix = new Matrix(matrix_vec) ; // calling the Matrix constructor that initialize a matrix
-            if(temp_matrix->get_n() > -1) { // if matrix is legal
-                // activates the shortest path solver for matrix
-                temp_buffer = this->searcher_solver->solve(temp_matrix);
-                answer = &temp_buffer[0];
-            }
-            else {
-                answer = "Matrix Is Illigal!" ;
-            }
+            temp_buffer = this->searcher_solver->solve(matrix_vec) ;
+            answer = &temp_buffer[0] ;
             n = write(sock_fd, answer, temp_buffer.length()); // write the solution to client
             delete(temp_matrix) ;
             if (n < 0) {

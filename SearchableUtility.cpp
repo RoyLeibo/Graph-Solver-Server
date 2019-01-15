@@ -16,15 +16,15 @@ vector<State*> SearchableUtility::getAllPossibleStates(State* s, unordered_map<s
         // if the vertex has an adjacent below
         possibleStates.push_back(vertex_map->at(create_index(this_i+1, this_j))) ;
     }
-    if(this_i-1 >= 0 && (vertex_map->at(create_index(this_i+1, this_j))->get_cost() > -1)) {
+    if(this_i-1 >= 0 && (vertex_map->at(create_index(this_i-1, this_j))->get_cost() > -1)) {
         // if the vertex has an adjacent above
         possibleStates.push_back(vertex_map->at(create_index(this_i-1, this_j))) ;
     }
-    if(this_j+1 < n && (vertex_map->at(create_index(this_i+1, this_j))->get_cost() > -1)) {
+    if(this_j+1 < n && (vertex_map->at(create_index(this_i, this_j+1))->get_cost() > -1)) {
         // if the vertex has an adjacent in it's right
         possibleStates.push_back(vertex_map->at(create_index(this_i, this_j+1))) ;
     }
-    if(this_j-1 >= 0 && (vertex_map->at(create_index(this_i+1, this_j))->get_cost() > -1)) {
+    if(this_j-1 >= 0 && (vertex_map->at(create_index(this_i, this_j-1))->get_cost() > -1)) {
         //if the vertex has an adjacent in it's left
         possibleStates.push_back(vertex_map->at(create_index(this_i, this_j-1))) ;
     }
@@ -120,7 +120,7 @@ string SearchableUtility::check_direction(State *current) {
         }
     }
 
-        // if the current vertex and it's father in the same line
+    // if the current vertex and it's father in the same line
     else if (current_i == father_i) {
         if (current_j > father_j) {
             return "RIGHT";
