@@ -12,10 +12,11 @@ void* run_solver_serial(void* arg) {
   delete arg_struct_p;
   int time_out_flag = 0 ;
   OpenSocket* open_socket ;
+  bool is_first_client = true ;
   int sock_fd = open_socket->open_socket(arg_struct.port) ;
     while(true) {
     // activate a function that open a socket using a specific port
-    open_socket->listen_to_client(arg_struct.port, &time_out_flag) ;
+    open_socket->listen_to_client(arg_struct.port, &time_out_flag, &is_first_client) ;
     if(time_out_flag == 0) { // if there was no timeout
         // activate function which communicate with the client using the sock id which opened
         arg_struct.c_h->handle_client(sock_fd) ;
@@ -44,9 +45,9 @@ void* run_solver_parallel(void* arg) {
     int sock_fd = open_socket->open_socket(arg_struct.port) ;
     int new_sock_fd ;
     int time_out_flag = 0 ;
+    bool is_first_client = true ;
     while(true) {
-
-        new_sock_fd = open_socket->listen_to_client(sock_fd, &time_out_flag) ;
+        new_sock_fd = open_socket->listen_to_client(sock_fd, &time_out_flag, &is_first_client) ;
 
         // activate a function that open a socket using a specific port
 
@@ -66,6 +67,7 @@ void* run_solver_parallel(void* arg) {
             // When the thread is finished, it will delete it's id from the vector.
             pthread_create(&tid, nullptr, run_in_parallel, p_s);
         }
+
         else {
             delete(open_socket) ;
             delete(c_h) ;

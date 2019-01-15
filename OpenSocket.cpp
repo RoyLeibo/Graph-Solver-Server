@@ -54,7 +54,7 @@ int OpenSocket::open_socket(int port) {
   return sock_fd ;
 }
 
-int OpenSocket::listen_to_client(int sock_fd, int* time_out_flag) {
+int OpenSocket::listen_to_client(int sock_fd, int* time_out_flag, bool* is_first_client) {
     int clilen, new_sock_fd;
     struct sockaddr_in cli_addr ;
 
@@ -63,7 +63,15 @@ int OpenSocket::listen_to_client(int sock_fd, int* time_out_flag) {
 
     // sets timeout's definition
     timeval timeout;
-    timeout.tv_sec = 10000000000000;
+    if(*is_first_client) {
+        timeout.tv_sec = std::numeric_limits<int>::max() ;
+        *is_first_client = false ;
+    }
+
+    else {
+        timeout.tv_sec = 1 ;
+    }
+
     timeout.tv_usec = 0;
     setsockopt(sock_fd,SOL_SOCKET,SO_RCVTIMEO,(char *)&timeout, sizeof(timeout));
 

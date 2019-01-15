@@ -5,17 +5,21 @@
 #include "AStar.h"
 
 string AStar::search(Searchable *searchable) {
+    State *current_vertex;
+    State *temp_adj;
+    State *goal_vertex = searchable->getGoalState();
+    State *start_vertex = searchable->getInitialState();
+
+    if (goal_vertex->get_vertex_index() == start_vertex->get_vertex_index()) {
+        return "{}\r\n" ;
+    }
+
     unordered_map<string, State *> *vertex_map = searchable->get_vertex_map(); // get matrix map
     map<string, double> g_map = build_g_map(vertex_map); // build g value map
     map<string, double> f_map = build_f_map(vertex_map); // build f value map
 
     // build adjacents map
     map<string, vector<State *>> adjacent_map = SearchableUtility::build_adjacent_map(vertex_map, searchable->get_n());
-
-    State *current_vertex;
-    State *temp_adj;
-    State *goal_vertex = searchable->getGoalState();
-    State *start_vertex = searchable->getInitialState();
 
     map<string, double> h_map = build_h_map(vertex_map, goal_vertex); // build h value map
 
