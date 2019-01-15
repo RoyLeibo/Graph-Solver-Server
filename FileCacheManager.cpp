@@ -1,5 +1,7 @@
 #include "FileCacheManager.h"
 #include <iterator>
+#include <pthread.h>
+#include "Main.h"
 
 //constructor of FileCacheManger
 FileCacheManager::FileCacheManager(std::string name_file)
