@@ -18,7 +18,7 @@ using namespace std;
 class DFS : public  Searcher
 {
     private:
-        int counter;
+        int evaluated_nodes;
         void searchDFS(string* answer, Searchable* searchable, map<string, vector<State*>> adjacent_map,map<string,
                 bool> visited_map, State* current, State* goalState);
     public:
