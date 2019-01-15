@@ -31,11 +31,11 @@ class OpenThread {
 
 // This struct is used for handling a client/s in a diferent thread.
 
-struct solver_struct {
-    int port ;
-    ClientHandler* c_h ;
-
-};
+//struct solver_struct {
+//    int port ;
+//    ClientHandler* c_h ;
+//
+//};
 
 // This struct is used to run from a different thread when the server is run in parallel.
 

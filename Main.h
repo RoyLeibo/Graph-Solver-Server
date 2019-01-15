@@ -20,6 +20,7 @@
 
 static pthread_mutex_t mutex1 ;
 static pthread_mutex_t mutex2 ;
+static pthread_mutex_t mutex3 ;
 
 namespace boot {
 
@@ -30,9 +31,10 @@ namespace boot {
             server_side::Server *A = new MyParallelServer;
             ClientHandler *B = new MyClientHandler(solver);
             A->open(port, B);
-            delete (solver);
-            delete (A);
-            delete (B);
+            cout << "end of main" << endl ;
+//            delete (solver);
+//            delete (A);
+//            delete (B);
 
 //            vector<string> matrix_vec ;
 //            matrix_vec.push_back("5,1,5,1,1,1,5") ;
@@ -47,6 +49,7 @@ namespace boot {
 //            Searchable* mat = new Matrix(matrix_vec) ;
 //            Searcher* bfs = new BFS() ;
 //            cout << bfs->search(mat) << endl ;
+
         }
 
     };

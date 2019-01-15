@@ -12,6 +12,7 @@ MyClientHandler::MyClientHandler(Solver<vector<string>, string> *searcher_solver
  */
 
 void MyClientHandler::handle_client(int sock_fd) {
+    cout << "In thread" << endl ;
     char buffer[256];
     char *answer;
     string line = "";

@@ -54,6 +54,7 @@ void* run_solver_parallel(void* arg) {
         if(time_out_flag == 0) { // if there was no timeout
 
             pthread_t tid; // initialize a new thread id
+            cout << tid<< endl ;
             threads_id.push_back(tid); // push this thread's id into the vec
 
             parallel_struct* p_s = new parallel_struct ; // initialize a new struct to run in parallel
@@ -67,23 +68,23 @@ void* run_solver_parallel(void* arg) {
             // When the thread is finished, it will delete it's id from the vector.
             pthread_create(&tid, nullptr, run_in_parallel, p_s);
         }
-
         else {
-            delete(open_socket) ;
-            delete(c_h) ;
-
+            pthread_mutex_lock(&mutex3) ;
             // When there was a time out, the program will not receive any more clients.
             // The loop will run throw the threads_id vector and using the function "pthread_join"
             // function to "wait" until all threads is finished handling it's clients.
-            int threads_id_size = threads_id.size() ;
-            for(int i = 0 ; i < threads_id_size ; i++) {
-                // activate join function for ever thread left in the vec
-                pthread_join(threads_id.at(i), NULL) ;
+
+            for (auto it: threads_id) {
+                pthread_join(it, NULL) ;
+                cout << "join thread " << it << endl ;
             }
+
+            pthread_mutex_unlock(&mutex3) ;
             break ;
         }
     }
-    pthread_exit(0) ;
+//    delete(open_socket) ;
+//    delete(c_h) ;
 }
 
 /* This function is activated from the run_parallel_server function.
@@ -119,8 +120,8 @@ pthread_t OpenThread::open_thread(int port, ClientHandler* c_h, int server_clien
 
     struct solver_struct* s_s = new solver_struct;
     s_s->port = port ;
-    s_s->c_h = c_h ;  
-  
+    s_s->c_h = c_h ;
+
     // The switch case is to indicate in which type of server to use: serial or parallel.
     // than, it creates a thread with the struct and a function which reads data from the simulator,
     // parse it and update the variables map

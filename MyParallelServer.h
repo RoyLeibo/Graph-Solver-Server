@@ -17,5 +17,11 @@ private:
         virtual ~MyParallelServer() ;
 };
 
+struct solver_struct {
+    int port ;
+    ClientHandler* c_h ;
+
+};
+
 
 #endif //FINAL_PROJECT_SECOND_MYPARALLELSERVER_H
