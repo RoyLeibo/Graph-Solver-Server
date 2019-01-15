@@ -34,8 +34,8 @@ string BestFS::search(Searchable* searchable)
         //if the state is the goal restore the solution
         if((current_vertex) == searchable->getGoalState())
         {
-            this->counter++;
-            cout<<this->counter<<"\n"<<endl;
+            this->evaluated_nodes++;
+            cout<<this->evaluated_nodes<<"\n"<<endl;
             return SearchableUtility::restore_solution(searchable);
         }
         else
@@ -50,7 +50,7 @@ string BestFS::search(Searchable* searchable)
                     current_adjacent->set_father(current_vertex);
                     //mark him as visited
                     visited_map[current_adjacent->get_vertex_index()] = true;
-                    this->counter++;
+                    this->evaluated_nodes++;
                     //check if he is the state gol
                     if(current_adjacent == searchable->getGoalState())
                     {
@@ -156,6 +156,6 @@ map<string, double> BestFS::build_f_map(unordered_map<string, State *> *vertex_m
 
 int BestFS::getNumberOfNodesEvaluated()
 {
-    return this->counter;
+    return this->evaluated_nodes;
 }
 BestFS::~BestFS(){};

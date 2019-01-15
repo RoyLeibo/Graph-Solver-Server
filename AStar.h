@@ -11,6 +11,8 @@
 
 class AStar: public Searcher {
 
+    int evaluated_nodes ;
+
 public:
     virtual string search(Searchable* searchable) ;
     virtual int getNumberOfNodesEvaluated() ;

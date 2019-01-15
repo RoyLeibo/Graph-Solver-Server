@@ -3,13 +3,14 @@
 //
 
 #include "GraphSolver.h"
+#include "AStar.h"
 
 using namespace std ;
 
 GraphSolver::GraphSolver()
 {
     this->fileCacheManager = new FileCacheManager("graph_solution.csv");
-    this->searcher = new BestFS();
+    this->searcher = new AStar();
 
 }
 
@@ -17,6 +18,7 @@ string GraphSolver::solve(std::vector<std::string> problem)
 {
     string problem_string;
     string solution_string;
+    string answer ;
 
     for(int i = 0 ; i < problem.size() ; i++)
     {
@@ -30,10 +32,22 @@ string GraphSolver::solve(std::vector<std::string> problem)
     }
     else
     {
-        this->searchable  = new Matrix(problem);
-        solution_string = this->searcher->search(this->searchable);
-        this->fileCacheManager->add_solution_map(problem_string,solution_string);
-        this->fileCacheManager->add_solution_vec(pair<string,string>(problem_string,solution_string));
-        return solution_string;
+        this->searchable = new Matrix(problem);
+        if(this->searchable->get_n() > -1) { // if matrix is legal
+
+            // activates the shortest path solver for matrix
+            answer = this->searcher->search(this->searchable) ;
+
+            // adds the new solution into the solutions map and file
+            solution_string = this->searcher->search(this->searchable);
+            this->fileCacheManager->add_solution_map(problem_string,solution_string);
+            this->fileCacheManager->add_solution_vec(pair<string,string>(problem_string,solution_string));
+            return solution_string;
+        }
+        else {
+            answer = "Matrix Is Illigal!" ;
+            return answer ;
+        }
+
     }
 }

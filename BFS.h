@@ -14,7 +14,7 @@ using namespace std ;
 
 class BFS: public Searcher{
     private:
-        int counter;
+        int evaluated_nodes;
 
     public:
         virtual string search(Searchable* searchable) ;
