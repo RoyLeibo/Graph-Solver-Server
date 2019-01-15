@@ -56,6 +56,7 @@ string BFS::search(Searchable* searchable) {
             }
         }
     }
+    return "-1\r\n";
 }
 int BFS:: getNumberOfNodesEvaluated()
 {

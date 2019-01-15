@@ -10,17 +10,26 @@
  */
 string DFS::search(Searchable* searchable)
 {
+    string answer;
     //create vertex map
     unordered_map<string, State*>* vertex_map = searchable->get_vertex_map() ;
     //create adjacent map
     map<string, vector<State*>> adjacent_map = SearchableUtility::build_adjacent_map(vertex_map , searchable->get_n()) ;
     //create visited map
     map<string, bool> visited_map = SearchableUtility::create_visited_map(vertex_map) ;
+    if(searchable->getInitialState() == searchable -> getGoalState())
+    {
+        return "{}\r\n";
+    }
     //use searchDFS in recursion to find the possible way to goalState from initialState
-    searchDFS(adjacent_map,visited_map,searchable->getInitialState(),searchable->getGoalState());
+    searchDFS(&answer,searchable,adjacent_map,visited_map,searchable->getInitialState(),searchable->getGoalState());
     //restore the solution
     cout<< this->counter<<"\n"<<endl;
-    return SearchableUtility::restore_solution(searchable);
+    if(answer == "")
+    {
+        answer = "-1\r\n";
+    }
+    return answer;
 
 }
 
@@ -29,7 +38,8 @@ string DFS::search(Searchable* searchable)
  * move on all vertex adjacent and do recursion
  * in each recursion the vertex get father
  */
- void DFS::searchDFS( map<string, vector<State*>>  adjacent_map,map<string, bool> visited_map , State* current, State* goalState)
+ void DFS::searchDFS(string* answer, Searchable* searchable, map<string, vector<State*>>
+         adjacent_map,map<string, bool> visited_map , State* current, State* goalState)
  {
      //mark the vertex as visited
      visited_map[current->get_vertex_index()] = true;
@@ -46,11 +56,12 @@ string DFS::search(Searchable* searchable)
              current_adjacent->set_father(current) ;
              //if it id not the goalState do recursion with current adjacent vertex
              if(current_adjacent != goalState) {
-                 searchDFS(adjacent_map, visited_map, current_adjacent, goalState);
+                 searchDFS(answer,searchable,adjacent_map, visited_map, current_adjacent, goalState);
              }
              //if it id the goalState finish the function
              else
              {
+                 (*answer) = SearchableUtility::restore_solution(searchable);
                  break;
              }
          }
