@@ -38,8 +38,8 @@ namespace boot {
 
             vector<string> matrix_vec ;
             string line ;
-            for (int i = 0 ; i < 10 ; i++) {
-                for (int j = 0 ; j < 10 ; j++) {
+            for (int i = 0 ; i < 50; i++) {
+                for (int j = 0 ; j < 50; j++) {
                     line += to_string(rand() % 20 - 1)+',' ;
 
                 }
@@ -48,6 +48,8 @@ namespace boot {
                 cout << line << endl;
                 line = "" ;
             }
+            matrix_vec.push_back("0,0") ;
+            matrix_vec.push_back("49,49") ;
 //            matrix_vec.push_back("5,10,5,4,7,2,5,") ;
 //            matrix_vec.push_back("5,1,5,1,5,1,5,10,") ;
 //            matrix_vec.push_back("5,1,5,1,5,1,5") ;
@@ -57,9 +59,10 @@ namespace boot {
 //            matrix_vec.push_back("1,1,1,1,1,1,1") ;
 //            matrix_vec.push_back("0,0") ;
 //            matrix_vec.push_back("6,6") ;
-//            Searchable* mat = new Matrix(matrix_vec) ;
-//            Searcher* bfs = new BFS() ;
-//            cout << bfs->search(mat) << endl ;
+            Searchable* mat = new Matrix(matrix_vec) ;
+            Searcher* bfs = new DFS() ;
+            cout << bfs->search(mat) << endl ;
+            cout << bfs->getNumberOfNodesEvaluated()<< endl ;
 
         }
 
