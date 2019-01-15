@@ -4,6 +4,7 @@
 
 #include "GraphSolver.h"
 #include "AStar.h"
+#include "Main.h"
 
 using namespace std ;
 
@@ -25,7 +26,10 @@ string GraphSolver::solve(std::vector<std::string> problem)
        problem_string +=  problem.at(i) + ",";
     }
     bool there_is_solution;
+    pthread_mutex_lock(&mutex2) ;
     there_is_solution = this->fileCacheManager->find_solution(problem_string) ;
+    pthread_mutex_lock(&mutex2) ;
+
     if(there_is_solution)
     {
         return this->fileCacheManager->get_solution(problem_string);
