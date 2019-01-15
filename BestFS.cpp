@@ -28,6 +28,7 @@ string BestFS::search(Searchable* searchable)
         return "{}";
     }
     vec.push_back(searchable->getInitialState());
+    visited_map[searchable->getInitialState()->get_vertex_index()] = true;
     while(!vec.empty())
     {
         //find the state with the lowest cost

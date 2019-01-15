@@ -3,66 +3,56 @@
 //
 
 #include "DFS.h"
+#include <stack>
 
 /*
  * This function get searchable
  * and return possible way to goalState when the start is in initialState
  */
 string DFS::search(Searchable* searchable) {
-    string answer;
+    stack<State*> s;
+    State* current;
+    State* current_adjacent;
     //create vertex map
     unordered_map<string, State *> *vertex_map = searchable->get_vertex_map();
     //create adjacent map
     map<string, vector<State *>> adjacent_map = SearchableUtility::build_adjacent_map(vertex_map, searchable->get_n());
     //create visited map
     map<string, bool> visited_map = SearchableUtility::create_visited_map(vertex_map);
-    //use searchDFS in recursion to find the possible way to goalState from initialState
-    searchDFS(&answer, searchable, adjacent_map, visited_map, searchable->getInitialState(),
-              searchable->getGoalState());
-    //restore the solution
-    cout << this->evaluated_nodes << "\n" << endl;
-    if (answer == "") {
-        answer = "-1 \r\n";
+    if(searchable->getGoalState() == searchable->getInitialState())
+    {
+        return "{}";
     }
-    return answer;
+    s.push(searchable->getInitialState());
+    while(!s.empty())
+    {
+        current = s.top();
+        s.pop();
+        if(!visited_map[current->get_vertex_index()])
+        {
+            visited_map[current->get_vertex_index()] = true;
+            this->evaluated_nodes++;
+        }
+        vector<State*> temp_adjacent = adjacent_map[current->get_vertex_index()] ;
+        for (int i = 0; i < temp_adjacent.size() ; i++)
+        {
+            current_adjacent = temp_adjacent[i];
+            //if the state have not visited yet
+            if (visited_map[current_adjacent->get_vertex_index()] == false)
+            {
+                //set the current vertex to be his father
+                current_adjacent->set_father(current);
+                if (current_adjacent != searchable->getGoalState()) {
+                    s.push(current_adjacent);
+                } else
+                {
+                    return SearchableUtility::restore_solution(searchable);
+                }
+            }
+        }
+    }
+    return "-1";
 }
-
-/*
- * This function get adjacent map,visited map, state and goalStart
- * move on all vertex adjacent and do recursion
- * in each recursion the vertex get father
- */
- void DFS::searchDFS(string* answer, Searchable* searchable, map<string, vector<State*>> adjacent_map,map<string,bool> visited_map, State* current, State* goalState)
- {
-     //mark the vertex as visited
-     visited_map[current->get_vertex_index()] = true;
-     this->evaluated_nodes++;
-     vector<State*> temp_adjacent = adjacent_map[current->get_vertex_index()] ;
-     State* current_adjacent ;
-     //move on all vertex adjacent
-     for (int i = 0; i < temp_adjacent.size() ; i++)
-     {
-         current_adjacent = temp_adjacent[i] ;
-         //if the state have not visited yet
-         if(visited_map[current_adjacent->get_vertex_index()] == false)
-         {
-             //set the current vertex to be his father
-             current_adjacent->set_father(current) ;
-             //if it id not the goalState do recursion with current adjacent vertex
-             if(current_adjacent != goalState)
-             {
-                 searchDFS(answer, searchable, adjacent_map, visited_map, current_adjacent, goalState);
-             }
-             //if it id the goalState finish the function
-             else
-             {
-                 *answer = SearchableUtility::restore_solution(searchable);
-                 break;
-             }
-         }
-     }
- }
-
  int DFS:: getNumberOfNodesEvaluated()
 {
     return this->evaluated_nodes;
