@@ -43,7 +43,6 @@ void* run_solver_parallel(void* arg) {
     struct solver_struct* arg_struct_p = (solver_struct*)arg ;
     struct solver_struct arg_struct = *arg_struct_p;
     delete arg_struct_p;
-    vector<pthread_t> threads_id ; // initialize a vector for all the thread's ids
     ClientHandler* c_h = arg_struct.c_h ;
     int time_out_flag = 0 ;
     bool is_first_client = true ;
@@ -53,6 +52,7 @@ void* run_solver_parallel(void* arg) {
     struct sockaddr_in cli_addr ;
     listen(sock_fd, std::numeric_limits<int>::max()); // wait for a connection request
     clilen = sizeof(cli_addr);
+    vector<bool*> all_threads_flags_vec;
     while(true) {
         new_sock_fd = open_socket->listen_to_client(sock_fd, &time_out_flag, &is_first_client, clilen) ;
 
@@ -61,14 +61,12 @@ void* run_solver_parallel(void* arg) {
         if(time_out_flag == 0) { // if there was no timeout
 
             pthread_t tid ; // initialize a new thread id
-            pthread_t* tid_p = new pthread_t(tid) ;
-            threads_id.push_back(tid); // push this thread's id into the vec
-
+            bool* is_thread_finished = new bool(false);
+            all_threads_flags_vec.push_back(is_thread_finished) ;
             parallel_struct* p_s = new parallel_struct ; // initialize a new struct to run in parallel
             p_s->c_h = c_h ; // insert the copy into struct
-            p_s->threads_id_vec = &threads_id ; // insert the vector into struct
             p_s->sock_fd = new_sock_fd ; // insert the sock id into struct
-            p_s->this_thread_id = tid ; // insert this thread id into struct
+            p_s->is_thread_finished = is_thread_finished ; // insert this thread id into struct
             // creates a new thread to run in parallel using the struct that has just initialize and the
             // run_in_parallel thread function.
             // When the thread is finished, it will delete it's id from the ve
@@ -76,16 +74,35 @@ void* run_solver_parallel(void* arg) {
 
         }
         else {
-            pthread_mutex_lock(&mutex3) ;
             // When there was a time out, the program will not receive any more clients.
             // The loop will run throw the threads_id vector and using the function "pthread_join"
             // function to "wait" until all threads is finished handling it's clients.
-
-            for (int i = 0 ; i < threads_id.size() ; i++) {
-                    pthread_join(threads_id[i], nullptr);
-                    cout << "join to " << threads_id[i] << endl ;
+            int counter ;
+            while (true) {
+                counter = 0 ;
+                cout << "vector size: " << all_threads_flags_vec.size() << endl ;
+//                cout << "Thread " << 1 << " is " << *all_threads_flags_vec.at(0) << endl ;
+//                cout << "Thread " << 2 << " is " << *all_threads_flags_vec.at(1) << endl ;
+//                cout << "Thread " << 3 << " is " << *all_threads_flags_vec.at(2) << endl ;
+//                cout << "Thread " << 4 << " is " << *all_threads_flags_vec.at(3) << endl ;
+//                cout << "Thread " << 5 << " is " << *all_threads_flags_vec.at(4) << endl ;
+//                cout << "Thread " << 6 << " is " << *all_threads_flags_vec.at(5) << endl ;
+                for(int i = 0 ; i < all_threads_flags_vec.size() ; i++) {
+                    if (*all_threads_flags_vec.at(i) == false) {
+                        break ;
+                    }
+                    counter++ ;
+                }
+                cout << "number of thread still running now: " << all_threads_flags_vec.size()-counter << endl ;
+                if (counter == all_threads_flags_vec.size()) {
+                    cout << "all thread is finished" << endl ;
+                    break ;
+                }
+                cout << "start loop again.." << endl ;
             }
-            pthread_mutex_unlock(&mutex3) ;
+            for(int i = 0 ; i < all_threads_flags_vec.size() ; i++) {
+                delete(all_threads_flags_vec.at(i)) ;
+            }
             break ;
         }
     }
@@ -99,19 +116,11 @@ void* run_solver_parallel(void* arg) {
 
 void* run_in_parallel(void* arg) {
     struct parallel_struct* arg_struct_p = (parallel_struct*)arg ;
-    struct parallel_struct arg_struct = *arg_struct_p;
+    struct parallel_struct arg_struct = *arg_struct_p ;
     delete arg_struct_p ;
     arg_struct.c_h->handle_client(arg_struct.sock_fd) ;
     close(arg_struct.sock_fd) ;
-    pthread_mutex_lock(&mutex1) ;
-    int threads_id_size = arg_struct.threads_id_vec->size() ;
-    for(int i = 0 ; i < threads_id_size ; i++) {
-        if(arg_struct.threads_id_vec->at(i) == arg_struct.this_thread_id ) {
-            arg_struct.threads_id_vec->erase(arg_struct.threads_id_vec->begin() + i) ;
-            break ;
-        }
-    }
-    pthread_mutex_unlock(&mutex1) ;
+    *arg_struct.is_thread_finished = true ;
     pthread_exit(0) ;
 }
 

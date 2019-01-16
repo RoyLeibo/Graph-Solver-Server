@@ -26,9 +26,9 @@ string GraphSolver::solve(std::vector<std::string> problem)
        problem_string +=  problem.at(i) + ",";
     }
     bool there_is_solution;
-    pthread_mutex_lock(&mutex2) ;
+//    pthread_mutex_lock(&mutex2) ;
     there_is_solution = this->fileCacheManager->find_solution(problem_string) ;
-    pthread_mutex_lock(&mutex2) ;
+//    pthread_mutex_lock(&mutex2) ;
 
     if(there_is_solution)
     {
@@ -54,4 +54,9 @@ string GraphSolver::solve(std::vector<std::string> problem)
         }
 
     }
+}
+
+GraphSolver::~GraphSolver(){
+    delete(this->searchable) ;
+    delete(this->searcher) ;
 }

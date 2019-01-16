@@ -100,4 +100,9 @@ int Matrix::get_n() {
     return this->n ;
 }
 
-Matrix::~Matrix(){};
+Matrix::~Matrix(){
+    unordered_map<string, State *>::iterator it;
+    for (it = this->vertex_map.begin(); it != this->vertex_map.end(); ++it) {
+        delete(this->vertex_map[it->first]) ;
+    }
+}
