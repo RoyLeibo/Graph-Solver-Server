@@ -22,8 +22,8 @@ class GraphSolver : public Solver<std::vector<std::string>,std::string> {
         Searcher *searcher;
     public:
         GraphSolver();
-            virtual std::string solve(std::vector<std::string> problem);
-
+        virtual std::string solve(std::vector<std::string> problem);
+        virtual ~GraphSolver() ;
 };
 
 

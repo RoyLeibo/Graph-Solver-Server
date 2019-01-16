@@ -41,9 +41,8 @@ class OpenThread {
 
 struct parallel_struct {
     ClientHandler* c_h ;
-    vector<pthread_t>* threads_id_vec ;
     int sock_fd ;
-    pthread_t this_thread_id ;
+    bool *is_thread_finished ;
 
 };
 
