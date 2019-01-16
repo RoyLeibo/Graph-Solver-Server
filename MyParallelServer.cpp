@@ -22,4 +22,6 @@ void MyParallelServer::start() {
 
 }
 
-MyParallelServer::~MyParallelServer(){};
+MyParallelServer::~MyParallelServer(){
+    delete (this->openThread);
+};
