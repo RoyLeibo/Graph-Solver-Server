@@ -10,6 +10,10 @@
  */
 string BestFS::search(Searchable* searchable)
 {
+    State* initialState = searchable->getInitialState() ;
+    State* goalState = searchable->getGoalState();
+    double cost_current = 0.0;
+    double cost_current_adjacent = 0.0;
     //create vertex map
     unordered_map<string, State*>* vertex_map = searchable->get_vertex_map() ;
     //create adjacent map
@@ -18,8 +22,8 @@ string BestFS::search(Searchable* searchable)
     map<string, bool> visited_map = SearchableUtility::create_visited_map(vertex_map) ;
     //create cost map
     map<string, double> cost_map = build_f_map(vertex_map);
-    vector<State*> vec;
-    vector<State *>::iterator current;
+    vector<pair<double ,State*>> vec;
+    vector<pair<double ,State*>>::iterator current;
     State* current_adjacent ;
     State* current_vertex;
     //push the initial state to the vector
@@ -27,20 +31,21 @@ string BestFS::search(Searchable* searchable)
     {
         return "{}";
     }
-    vec.push_back(searchable->getInitialState());
+    vec.push_back(pair<double ,State*>(initialState->get_cost(),initialState));
     visited_map[searchable->getInitialState()->get_vertex_index()] = true;
     while(!vec.empty())
     {
         //find the state with the lowest cost
-        current = find_lowest_cost(&vec,&cost_map);
-        current_vertex = *current;
+        current = find_lowest_cost(&vec);
+        current_vertex = current->second;
+        cost_current = current->first;
         //erase the this state from the vector
         vec.erase(current);
+        this->evaluated_nodes++;
         //if the state is the goal restore the solution
         if((current_vertex) == searchable->getGoalState())
         {
             this->evaluated_nodes++;
-            cout<<this->evaluated_nodes<<"\n"<<endl;
             return SearchableUtility::restore_solution(searchable);
         }
         else
@@ -55,14 +60,14 @@ string BestFS::search(Searchable* searchable)
                     current_adjacent->set_father(current_vertex);
                     //mark him as visited
                     visited_map[current_adjacent->get_vertex_index()] = true;
-                    this->evaluated_nodes++;
                     //check if he is the state gol
                     if(current_adjacent == searchable->getGoalState())
                     {
                         return SearchableUtility::restore_solution( searchable);
                     }
+                    cost_current_adjacent = cost_map[current_adjacent->get_vertex_index()];
                     //push the state to vector
-                    vec.push_back(current_adjacent);
+                    vec.push_back(pair<double,State*>(cost_current_adjacent+cost_current,current_adjacent ));
                 }
             }
         }
@@ -128,16 +133,16 @@ bool BestFS::find_in_vec(vector<State*> *vec,State* is_find)
  *This function get vector and map of costs
  * move on the vector and find the lowst cost
  */
-vector<State *>::iterator BestFS::find_lowest_cost(vector<State *> *vec, map<string, double> *cost_to_vertex_map) {
+vector<pair<double ,State*>>::iterator BestFS::find_lowest_cost(vector<pair<double ,State*>> *vec) {
     //it is iterator to the first organ in the vector
-    vector<State *>::iterator it = vec->begin();
-    vector<State *>::iterator min_cost_it;
+    vector<pair<double ,State*>>::iterator it = vec->begin();
+    vector<pair<double ,State*>>::iterator min_cost_it;
     //min cost is one more than the first organ in order to get in to the if in the loop
-    double min_cost = (*cost_to_vertex_map)[(*it)->get_vertex_index()]+ ONE;
+    double min_cost = (*it).first + ONE;
     double temp_cost;
     //move on the organs in the vector
     for (it = vec->begin(); it != vec->end(); it++) {
-        temp_cost = (*cost_to_vertex_map)[(*it)->get_vertex_index()];
+        temp_cost = (*it).first;
         //if there is organ that have lower cost then the min cost save his value in min_cost
         if (temp_cost < min_cost) {
             min_cost = temp_cost;
