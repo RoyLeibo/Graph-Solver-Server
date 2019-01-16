@@ -39,7 +39,12 @@ bool FileCacheManager::find_solution(std::string problem)
         //save that the map is update in this run of the program
         this->flg = true;
         //do this function again and return the right answer now that the map update
-        return find_solution(problem);
+        it = this->hash_map.find(problem);
+        if(it != this->hash_map.end())
+        {
+            return true;
+        }
+        return false;
     }
 }
 
@@ -49,7 +54,7 @@ bool FileCacheManager::find_solution(std::string problem)
  */
 std::string FileCacheManager:: get_solution(std::string problem)
 {
-    return this->hash_map[problem];
+    return this->hash_map[problem] + "\r\n";
 }
 
 void FileCacheManager:: add_solution_vec(std::pair<std::string,std::string> solution)
@@ -62,17 +67,20 @@ void FileCacheManager:: add_solution_vec(std::pair<std::string,std::string> solu
  */
 void FileCacheManager::update_map()
 {
+    std::ifstream point_file;
     std::string line;
     //if the file do not exists create one
-    this->solution_file.open(this->name_file,std::ios::app);
-    this->solution_file.close();
-    //read all the line from the file
-    while(getline(this->solution_file,line))
+    point_file.open(this->name_file);
+    if(point_file)
     {
-        //inter the data do the map
-        line_to_map(line);
+        //read all the line from the file
+        while (getline(point_file, line))
+        {
+            //inter the data do the map
+            line_to_map(line);
+        }
+        point_file.close();
     }
-
 }
 /*
  * This function get a line
@@ -84,11 +92,11 @@ void FileCacheManager::line_to_map(std::string line)
     std::string value;
     int mark_comma = 0;
     //find mark comma
-    mark_comma = line.find(',',0);
+    mark_comma = line.find('{',0);
     //find the first word
-    key = line.substr(0,mark_comma - 1);
+    key = line.substr(0,mark_comma);
     //find the second word
-    value = line.substr(mark_comma + 1, line.length() -1);
+    value = line.substr(mark_comma , line.length() -1);
     //inter the value in to the map
     this->hash_map[key] = value;
 }
@@ -111,7 +119,7 @@ void FileCacheManager::write_to_file(std::vector<std::pair<std::string,std::stri
         //save thr second word
         std::string sec = this->vec.at(i).second;
         //write the solution to the file
-        this->solution_file << one<<","<<sec<< "\n";
+        this->solution_file << one<<sec<< "\n";
     }
     this->solution_file.close();
 }

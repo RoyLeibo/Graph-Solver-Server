@@ -75,59 +75,6 @@ string BestFS::search(Searchable* searchable)
     return "-1\r\n";
 }
 
-/*string BestFS::searchtwo(Searchable* searchable)
-{
-    unordered_map<string, State*>* vertex_map = searchable->get_vertex_map() ;
-    map<string, vector<State*>> adjacent_map = SearchableUtility::build_adjacent_map(vertex_map , searchable->get_n()) ;
-    map<string, bool> visited_map = SearchableUtility::create_visited_map(vertex_map) ;
-    map<string, double> cost_map = build_f_map(vertex_map);
-    vector<State*> open;
-    vector<State*> close;
-    vector<State *>::iterator current;
-    bool bool_close = false;
-    bool bool_open = false;
-    State* current_adjacent ;
-    open.push_back(searchable->getInitialState());
-    while(!open.empty())
-    {
-        current = find_lowest_cost(&open,&cost_map);
-        close.push_back((*current));
-        open.erase(current);
-        if((*current) == searchable->getGoalState())
-        {
-
-        }
-        else
-        {
-            vector<State*> temp_adjacent = adjacent_map[(*current)->get_vertex_index()] ;
-            for (int i = 0 ; i < temp_adjacent.size() ; i++) {
-                current_adjacent = temp_adjacent[i];
-                bool_open = find_in_vec(&open,current_adjacent);
-                bool_close = find_in_vec(&close,current_adjacent);
-                if(!bool_open && !bool_open)
-                {
-                    current_adjacent->set_father(*current) ;
-                    open.push_back(current_adjacent);
-                }
-
-            }
-        }
-
-    }
-}
-
-bool BestFS::find_in_vec(vector<State*> *vec,State* is_find)
-{
-    if(std::find((*vec).begin(),(*vec).end(),is_find) != (*vec).end())
-    {
-        return true;
-    }
-    else
-    {
-        return false;
-    }
-}
-*/
 
 /*
  *This function get vector and map of costs
@@ -151,6 +98,7 @@ vector<pair<double ,State*>>::iterator BestFS::find_lowest_cost(vector<pair<doub
     }
     return min_cost_it;
 }
+
 /*
  *This function get vertex map
  * move on the map and create map of cost
