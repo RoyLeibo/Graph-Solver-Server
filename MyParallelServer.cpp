@@ -14,14 +14,6 @@ void MyParallelServer::open(int port, ClientHandler* client_handler)
     pthread_join(thread_id, nullptr) ;
 }
 
-void MyParallelServer::stop() {
-
-}
-
-void MyParallelServer::start() {
-
-}
-
 MyParallelServer::~MyParallelServer(){
     delete (this->openThread);
 };

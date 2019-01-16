@@ -13,8 +13,6 @@ private:
     public:
         MyParallelServer() ;
         void open(int port, ClientHandler* client_handler);
-        void stop() ;
-        void start() ;
         virtual ~MyParallelServer() ;
 };
 

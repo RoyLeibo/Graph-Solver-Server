@@ -93,7 +93,6 @@ string SearchableUtility::restore_solution(Searchable *searchable) {
     }
 
     // join all the directions into a string
-    cout<< "Path Cost: " << cost_counter << endl ;
     for (int i = directions.size() - 1; i >= 0; i--) {
         answer += directions.at(i) + ", ";
     }

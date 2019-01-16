@@ -32,12 +32,10 @@ namespace boot {
             server_side::Server *A = new MyParallelServer;
             ClientHandler *B = new MyClientHandler(solver);
             A->open(port, B);
-            cout << "end of main" << endl ;
             delete(A);
-            delete (B);
+            delete(B);
 
         }
-
     };
 
 }

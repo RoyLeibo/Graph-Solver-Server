@@ -75,39 +75,28 @@ void* run_solver_parallel(void* arg) {
         }
         else {
             // When there was a time out, the program will not receive any more clients.
-            // The loop will run throw the threads_id vector and using the function "pthread_join"
+            // The loop will run throw the threads_flags vector and check if there are
+            // more threads that are still working with some other client.
             // function to "wait" until all threads is finished handling it's clients.
             int counter ;
             while (true) {
                 counter = 0 ;
-                cout << "vector size: " << all_threads_flags_vec.size() << endl ;
-//                cout << "Thread " << 1 << " is " << *all_threads_flags_vec.at(0) << endl ;
-//                cout << "Thread " << 2 << " is " << *all_threads_flags_vec.at(1) << endl ;
-//                cout << "Thread " << 3 << " is " << *all_threads_flags_vec.at(2) << endl ;
-//                cout << "Thread " << 4 << " is " << *all_threads_flags_vec.at(3) << endl ;
-//                cout << "Thread " << 5 << " is " << *all_threads_flags_vec.at(4) << endl ;
-//                cout << "Thread " << 6 << " is " << *all_threads_flags_vec.at(5) << endl ;
-                for(int i = 0 ; i < all_threads_flags_vec.size() ; i++) {
-                    if (*all_threads_flags_vec.at(i) == false) {
+                for(int i = 0 ; i < all_threads_flags_vec.size() ; i++) { // run throw all threads flags
+                    if (*all_threads_flags_vec.at(i) == false) { // if there is a thread working, continue to run.
                         break ;
                     }
-                    counter++ ;
+                    counter++ ; // count all finished threads
                 }
-                cout << "number of thread still running now: " << all_threads_flags_vec.size()-counter << endl ;
-                if (counter == all_threads_flags_vec.size()) {
-                    cout << "all thread is finished" << endl ;
+                if (counter == all_threads_flags_vec.size()) { // if all threads are done, break
                     break ;
                 }
-                cout << "start loop again.." << endl ;
             }
-            for(int i = 0 ; i < all_threads_flags_vec.size() ; i++) {
+            for(int i = 0 ; i < all_threads_flags_vec.size() ; i++) { // clear the flag's memory
                 delete(all_threads_flags_vec.at(i)) ;
             }
             break ;
         }
     }
-//    delete(open_socket) ;
-//    delete(c_h) ;
 }
 
 /* This function is activated from the run_parallel_server function.
@@ -118,9 +107,9 @@ void* run_in_parallel(void* arg) {
     struct parallel_struct* arg_struct_p = (parallel_struct*)arg ;
     struct parallel_struct arg_struct = *arg_struct_p ;
     delete arg_struct_p ;
-    arg_struct.c_h->handle_client(arg_struct.sock_fd) ;
-    close(arg_struct.sock_fd) ;
-    *arg_struct.is_thread_finished = true ;
+    arg_struct.c_h->handle_client(arg_struct.sock_fd) ; // handle the client
+    close(arg_struct.sock_fd) ; // close this socket
+    *arg_struct.is_thread_finished = true ; // change thread's flag to true (done)
     pthread_exit(0) ;
 }
 
